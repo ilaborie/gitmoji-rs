@@ -1,0 +1,47 @@
+[package]
+name = "gitmoji-rs"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Igor Laborie <ilaborie@gmail.com>"]
+rust-version = "1.58.1"
+
+[[bin]]
+name = "gitmoji"
+path = "src/main.rs"
+
+[features]
+hook = []
+
+[dependencies]
+clap = { version = "3.2", features = ["derive"] }
+
+serde = { version = "1", features = ["derive"] }
+toml = "0.5"
+
+directories = "4.0"
+
+console = "0.15"
+dialoguer = { version = "0.10", features = ["fuzzy-select"] }
+indicatif = "0.16"
+
+fuzzy-matcher = "0.3"
+
+tokio = { version = "1.19", features = ["process", "fs", "macros", "rt-multi-thread"] }
+
+reqwest = { version = "0.11", features = ["json", "rustls-tls-native-roots"] }
+url = { version = "2.2", features = ["serde"] }
+
+time = { version = "0.3", features = ["serde-well-known"] }
+
+thiserror = "1.0"
+
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["fmt"] }
+
+[dev-dependencies]
+
+[profile.release]
+# Optimize performance
+lto = true
+codegen-units = 1

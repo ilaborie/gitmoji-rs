@@ -1,0 +1,167 @@
+use std::fmt::{self, Display};
+
+use serde::{Deserialize, Serialize};
+use time::OffsetDateTime;
+use url::Url;
+
+/// The default URL used for update
+pub const DEFAULT_URL: &str = "https://gitmoji.dev/api/gitmojis";
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+/// The emoji format
+pub enum EmojiFormat {
+    /// Use the code mode, like ':smile:'
+    UseCode,
+    /// Use the emoji mode, like '😄'
+    UseEmoji,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+/// The Gitmojis config
+pub struct GitmojiConfig {
+    auto_add: bool,
+    format: EmojiFormat,
+    signed: bool,
+    scope: bool,
+    update_url: Url,
+    #[serde(with = "time::serde::iso8601::option")]
+    last_update: Option<OffsetDateTime>,
+    gitmojis: Vec<Gitmoji>,
+}
+
+impl GitmojiConfig {
+    /// Create a new `GitmojiConfig`
+    #[must_use]
+    pub const fn new(
+        auto_add: bool,
+        format: EmojiFormat,
+        signed: bool,
+        scope: bool,
+        update_url: Url,
+    ) -> Self {
+        Self {
+            auto_add,
+            format,
+            signed,
+            scope,
+            update_url,
+            last_update: None,
+            gitmojis: vec![],
+        }
+    }
+
+    /// If the "git add ." is run automatically
+    #[must_use]
+    pub const fn auto_add(&self) -> bool {
+        self.auto_add
+    }
+
+    /// The format of gitmoji (code or emoji)
+    #[must_use]
+    pub const fn format(&self) -> &EmojiFormat {
+        &self.format
+    }
+
+    /// If the signed commits is enabled
+    #[must_use]
+    pub const fn signed(&self) -> bool {
+        self.signed
+    }
+
+    /// If we add a scope
+    #[must_use]
+    pub const fn scope(&self) -> bool {
+        self.scope
+    }
+
+    /// The URL used for update
+    #[must_use]
+    pub fn update_url(&self) -> &str {
+        self.update_url.as_ref()
+    }
+
+    /// The last time the gitmoji list was updated
+    #[must_use]
+    pub const fn last_update(&self) -> Option<OffsetDateTime> {
+        self.last_update
+    }
+
+    /// The gitmoji list
+    #[must_use]
+    pub fn gitmojis(&self) -> &[Gitmoji] {
+        self.gitmojis.as_ref()
+    }
+
+    /// Set the gitmojis list
+    pub fn set_gitmojis(&mut self, gitmojis: Vec<Gitmoji>) {
+        self.last_update = Some(OffsetDateTime::now_utc());
+        self.gitmojis = gitmojis;
+    }
+}
+
+impl Default for GitmojiConfig {
+    fn default() -> Self {
+        Self {
+            auto_add: false,
+            format: EmojiFormat::UseCode,
+            signed: false,
+            scope: false,
+            update_url: DEFAULT_URL.parse().expect("It's a valid URL"),
+            last_update: None,
+            gitmojis: vec![],
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+/// A Gitmoji
+pub struct Gitmoji {
+    emoji: String,
+    code: String,
+    name: Option<String>,
+    description: Option<String>,
+}
+
+impl Gitmoji {
+    /// The emoji
+    #[must_use]
+    pub fn emoji(&self) -> &str {
+        self.emoji.as_ref()
+    }
+
+    /// The associated code
+    #[must_use]
+    pub fn code(&self) -> &str {
+        self.code.as_ref()
+    }
+
+    /// The name
+    #[must_use]
+    pub fn name(&self) -> Option<&str> {
+        self.name.as_deref()
+    }
+
+    /// The description
+    #[must_use]
+    pub fn description(&self) -> Option<&str> {
+        self.description.as_deref()
+    }
+}
+
+impl Display for Gitmoji {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let Gitmoji {
+            emoji,
+            code,
+            name,
+            description,
+            ..
+        } = self;
+        write!(
+            f,
+            "{emoji} {code} {} - {}",
+            name.as_deref().unwrap_or_default(),
+            description.as_deref().unwrap_or_default()
+        )
+    }
+}
