@@ -1,4 +1,8 @@
-on: [push, pull_request]
+on: 
+  push:
+    paths:
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
 
 name: Cargo Bloat
 
