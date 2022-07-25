@@ -7,15 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### ✨ Added
+### 🔀 Changed
+### ⚠️ Deprecated
+### ❌ Removed
+### 🐛 Fixed
+### 🛂 Security
+
+### [v0.1.0]
+
+### ✨ Added
 
 - 🚀 starting the project
 - ✨ Add `init` command to create the configuration
 - ✨ Add `list` command to list configured gitmojis
 - ✨ Add `search` command to search a gitmoji
 - ✨ Add `search` command to search a gitmoji
-
-### 🔀 Changed
-### ⚠️ Deprecated
-### ❌ Removed
-### 🐛 Fixed
-### 🛂 Security
