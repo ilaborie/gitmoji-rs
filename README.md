@@ -10,7 +10,13 @@ This is just an opinionated version of [`gitmoji-cli`](https://github.com/carlos
 
 ## Install
 
-Pick up the latest binary
+Pick up the [latest binary](./releases)
+
+Or If you have the [Rust toolchain](https://rustup.rs/) installed you can install with:
+
+```shell
+cargo install gitmoji-rs
+```
 
 ## Usage
 
@@ -131,7 +137,7 @@ Search a gitmoji
 
 Due to a bug, we cannot use yet.
 
-See [#1], help welcome
+See [Issue #1](./issues/1), help welcome
 
 ## License
 
