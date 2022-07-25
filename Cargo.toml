@@ -1,5 +1,9 @@
 [package]
 name = "gitmoji-rs"
+description = "A [gitmoji](https://gitmoji.dev/) interactive client for using gitmojis on commit messages."
+repository = "https://github.com/ilaborie/gitmoji-rs"
+keywords = ["cli", "git", "emoji", "gitmoji"]
+categories = ["command-line-utilities"]
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
