@@ -1,4 +1,5 @@
 use clap::Parser;
+use console::Term;
 use gitmoji_rs::{run, Settings};
 use tracing::error;
 
@@ -10,7 +11,8 @@ async fn main() {
         tracing_subscriber::fmt::init();
     }
 
-    if let Err(err) = run(settings).await {
+    let term = Term::stderr();
+    if let Err(err) = run(settings, &term).await {
         error!("Oops, {err}");
     }
 }

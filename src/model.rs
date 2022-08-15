@@ -16,7 +16,8 @@ pub enum EmojiFormat {
     UseEmoji,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
 /// The Gitmojis config
 pub struct GitmojiConfig {
     auto_add: bool,
@@ -113,7 +114,7 @@ impl Default for GitmojiConfig {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 /// A Gitmoji
 pub struct Gitmoji {
     emoji: String,
@@ -123,6 +124,22 @@ pub struct Gitmoji {
 }
 
 impl Gitmoji {
+    /// Create a gitmoji
+    #[must_use]
+    pub fn new(
+        emoji: String,
+        code: String,
+        name: Option<String>,
+        description: Option<String>,
+    ) -> Self {
+        Self {
+            emoji,
+            code,
+            name,
+            description,
+        }
+    }
+
     /// The emoji
     #[must_use]
     pub fn emoji(&self) -> &str {
@@ -163,5 +180,53 @@ impl Display for Gitmoji {
             name.as_deref().unwrap_or_default(),
             description.as_deref().unwrap_or_default()
         )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use assert2::*;
+
+    use super::*;
+
+    #[test]
+    fn should_serde_gitmoji() {
+        let gitmoji = Gitmoji {
+            emoji: String::from("🚀"),
+            code: String::from("rocket"),
+            name: Some(String::from("Initialize")),
+            description: Some(String::from("Bla bla")),
+        };
+
+        // Serialize
+        let toml = toml::to_string(&gitmoji);
+        let_assert!(Ok(toml) = toml);
+
+        // Deserialize
+        let result = toml::from_str::<Gitmoji>(&toml);
+        let_assert!(Ok(result) = result);
+
+        check!(result == gitmoji);
+    }
+
+    #[test]
+    fn should_serde_config() {
+        let mut config = GitmojiConfig::default();
+        config.gitmojis.push(Gitmoji {
+            emoji: String::from("🚀"),
+            code: String::from("rocket"),
+            name: Some(String::from("Initialize")),
+            description: Some(String::from("Bla bla")),
+        });
+
+        // Serialize
+        let toml = toml::to_string(&config);
+        let_assert!(Ok(toml) = toml);
+
+        // Deserialize
+        let result = toml::from_str::<GitmojiConfig>(&toml);
+        let_assert!(Ok(result) = result);
+
+        check!(result == config);
     }
 }
