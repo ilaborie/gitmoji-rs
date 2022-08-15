@@ -2,7 +2,6 @@
 
 ![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Continuous integration](https://github.com/actions-rs/toolchain/workflows/Continuous%20integration/badge.svg)
-![Dependabot enabled](https://api.dependabot.com/badges/status?host=github&repo=ilaborie/gitmoji-rs)
 
 This is just an opinionated version of [`gitmoji-cli`](https://github.com/carloscuesta/gitmoji-cli) written in Rust .
 

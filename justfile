@@ -40,8 +40,8 @@ format:
 # Format the code
 lint:
     @echo "🎩 Linting..."
-    cargo check
-    cargo clippy
+    cargo check --all-features
+    cargo clippy --all-features
 
 # Check the code (formatting, lint, and tests)
 check:
