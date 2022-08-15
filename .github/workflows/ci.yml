@@ -157,4 +157,4 @@ jobs:
       - name: Check semver
         uses: obi1kenobi/cargo-semver-checks-action@v1
         with:
-          crate-target: --bin gitmoji
+          crate-target: --lib gitmoji_rs
