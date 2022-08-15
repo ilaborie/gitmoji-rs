@@ -5,11 +5,19 @@ use tokio::process::Command;
 use crate::Result;
 
 pub(crate) async fn commit(
+    all: bool,
+    amend: bool,
     signed: bool,
     commit_title: &str,
     description: Option<&str>,
 ) -> Result<ExitStatus> {
     let mut args = vec!["commit"];
+    if all {
+        args.push("--all");
+    }
+    if amend {
+        args.push("--amend");
+    }
     if signed {
         args.push("-S");
     }

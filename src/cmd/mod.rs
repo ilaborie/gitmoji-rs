@@ -1,7 +1,6 @@
 use std::process::exit;
 
 use console::Term;
-use tokio::process::Command;
 use tracing::{info, warn};
 use url::Url;
 
@@ -80,22 +79,17 @@ async fn ask_commit_title_description(
 
 /// Commit using Gitmoji
 #[tracing::instrument]
-pub async fn commit(term: &Term) -> Result<()> {
+pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
     let config = get_config_or_stop().await;
 
     let CommitTitleDescription { title, description } =
         ask_commit_title_description(&config, term).await?;
 
     // Add before commit
-    if config.auto_add() {
-        let status = Command::new("git").arg("add").arg(".").status().await?;
-        if !status.success() {
-            return Err(Error::FailToCommit);
-        }
-    }
+    let all = all || config.auto_add();
 
     // Commit
-    let status = git::commit(config.signed(), &title, description.as_deref()).await?;
+    let status = git::commit(all, amend, config.signed(), &title, description.as_deref()).await?;
     status.success().then_some(()).ok_or(Error::FailToCommit)
 }
 
