@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Fixed
 ### 🛂 Security
 
+## [v0.3.0]
+
+### ✨ Added
+
+- Add `completion` command to generate shell completion
+
+### 🔀 Changed
+
+- Allow changing the URL on an `update` command
+- Allow pass flag `--all` and `--amend` to `commit` command
 
 ## [v0.2.0]
 
@@ -20,8 +30,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - ✅ Added some tests
 - 👷‍♂️ Improve CI
-
-### ✨ Added
 
 ### [v0.1.0]
 
