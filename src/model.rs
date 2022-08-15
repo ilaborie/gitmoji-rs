@@ -18,7 +18,7 @@ pub enum EmojiFormat {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default)]
-/// The Gitmojis config
+/// The Gitmojis configuration
 pub struct GitmojiConfig {
     auto_add: bool,
     format: EmojiFormat,
@@ -51,7 +51,23 @@ impl GitmojiConfig {
         }
     }
 
-    /// If the "git add ." is run automatically
+    /// Merge with a local configuration
+    pub fn merge(&mut self, local_config: &LocalGitmojiConfig) {
+        if let Some(auto_add) = local_config.auto_add() {
+            self.auto_add = auto_add;
+        }
+        if let Some(format) = local_config.format() {
+            self.format = format;
+        }
+        if let Some(signed) = local_config.signed() {
+            self.signed = signed;
+        }
+        if let Some(gitmojis) = local_config.gitmojis() {
+            self.gitmojis = gitmojis.to_vec();
+        }
+    }
+
+    /// If the "--all" is added to commit command
     #[must_use]
     pub const fn auto_add(&self) -> bool {
         self.auto_add
@@ -116,6 +132,48 @@ impl Default for GitmojiConfig {
             last_update: None,
             gitmojis: vec![],
         }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Default)]
+/// The local gitmoji configuration
+pub struct LocalGitmojiConfig {
+    auto_add: Option<bool>,
+    format: Option<EmojiFormat>,
+    signed: Option<bool>,
+    scope: Option<bool>,
+    gitmojis: Option<Vec<Gitmoji>>,
+}
+
+impl LocalGitmojiConfig {
+    /// If the "--all" is added to commit command
+    #[must_use]
+    pub fn auto_add(&self) -> Option<bool> {
+        self.auto_add
+    }
+
+    /// The format of gitmoji (code or emoji)
+    #[must_use]
+    pub fn format(&self) -> Option<EmojiFormat> {
+        self.format
+    }
+
+    /// If the signed commits is enabled
+    #[must_use]
+    pub fn signed(&self) -> Option<bool> {
+        self.signed
+    }
+
+    /// If we add a scope
+    #[must_use]
+    pub fn scope(&self) -> Option<bool> {
+        self.scope
+    }
+
+    /// The gitmoji list
+    #[must_use]
+    pub fn gitmojis(&self) -> Option<&[Gitmoji]> {
+        self.gitmojis.as_deref()
     }
 }
 

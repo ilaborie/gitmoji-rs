@@ -1,16 +1,18 @@
 use std::fmt::{self, Display};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use console::Term;
 use dialoguer::theme::ColorfulTheme;
 use dialoguer::{Confirm, Input, Select};
 use directories::ProjectDirs;
 use tokio::fs;
-use tracing::info;
+use tracing::{info, warn};
 
-use crate::{EmojiFormat, Error, GitmojiConfig, Result, DEFAULT_URL};
+use crate::{git, EmojiFormat, Error, GitmojiConfig, LocalGitmojiConfig, Result, DEFAULT_URL};
 
 const CONFIG_FILE: &str = "gitmojis.toml";
+const CONFIG_LOCAL_FILE: &str = "./.gitmojis.toml";
+const GIT_CONFIG_LOCAL_FILE: &str = "gitmoji.file";
 const DIR_QUALIFIER: &str = "com.github";
 const DIR_ORGANIZATION: &str = "ilaborie";
 const DIR_APPLICATION: &str = "gitmoji-rs";
@@ -103,11 +105,30 @@ async fn read_config() -> Result<GitmojiConfig> {
     let config_file = get_config_file().await?;
     info!("Read config file {config_file:?}");
     let bytes = fs::read(config_file).await?;
-    let result = toml::from_slice(&bytes)?;
+    let mut config = toml::from_slice::<GitmojiConfig>(&bytes)?;
+    let local_config = read_local_config().await?;
+    config.merge(&local_config);
+
+    Ok(config)
+}
+
+async fn read_local_config() -> Result<LocalGitmojiConfig> {
+    let mut path = git::get_config_value(GIT_CONFIG_LOCAL_FILE).await?;
+    if path.is_empty() {
+        path = String::from(CONFIG_LOCAL_FILE);
+    }
+    let file = Path::new(&path);
+    let result = if file.exists() {
+        info!("Read local config file {file:?}");
+        let bytes = fs::read(file).await?;
+        toml::from_slice(&bytes)?
+    } else {
+        warn!("Cannot read local config, file {path:?} does not exists");
+        LocalGitmojiConfig::default()
+    };
 
     Ok(result)
 }
-
 /// Read the user config file
 ///
 /// # Errors
