@@ -51,7 +51,7 @@ struct CommitTitleDescription {
     description: Option<String>,
 }
 
-#[tracing::instrument]
+#[tracing::instrument(skip(term))]
 async fn ask_commit_title_description(
     config: &GitmojiConfig,
     term: &Term,
@@ -78,7 +78,7 @@ async fn ask_commit_title_description(
 }
 
 /// Commit using Gitmoji
-#[tracing::instrument]
+#[tracing::instrument(skip(term))]
 pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
     let config = get_config_or_stop().await;
 
@@ -94,7 +94,7 @@ pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
 }
 
 /// Configure Gitmoji
-#[tracing::instrument]
+#[tracing::instrument(skip(term))]
 pub async fn config(default: bool, term: &Term) -> Result<()> {
     let config = if default {
         GitmojiConfig::default()
@@ -153,7 +153,7 @@ pub async fn remove_hook() -> Result<()> {
 
 /// Apply hook
 #[cfg(feature = "hook")]
-#[tracing::instrument]
+#[tracing::instrument(skip(term))]
 pub async fn apply_hook(
     dest: std::path::PathBuf,
     source: Option<String>,

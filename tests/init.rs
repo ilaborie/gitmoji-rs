@@ -54,6 +54,7 @@ async fn should_have_init_command_default_values() -> rexpect::errors::Result<()
 
 #[test_log::test(tokio::test)]
 #[serial]
+#[ignore = "depends on working directory"]
 async fn should_have_init_command_default_flag() -> anyhow::Result<()> {
     let _dir = home_isolation();
     let mut cmd = Command::cargo_bin("gitmoji")?;

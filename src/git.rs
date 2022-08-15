@@ -32,7 +32,6 @@ pub(crate) async fn commit(
     Ok(status)
 }
 
-#[cfg(feature = "hook")]
 pub(crate) async fn get_config_value(config_key: &str) -> Result<String> {
     let output = Command::new("git")
         .arg("config")

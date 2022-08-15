@@ -1,0 +1,288 @@
+auto_add = false
+format = 'UseEmoji'
+signed = false
+scope = false
+update_url = 'https://gitmoji.dev/api/gitmojis'
+
+[[gitmojis]]
+emoji = '✨'
+code = ':sparkles:'
+name = 'sparkles'
+description = 'Introduce new features.'
+
+[[gitmojis]]
+emoji = '🐛'
+code = ':bug:'
+name = 'bug'
+description = 'Fix a bug.'
+
+[[gitmojis]]
+emoji = '🎨'
+code = ':art:'
+name = 'art'
+description = 'Improve structure / format of the code.'
+
+[[gitmojis]]
+emoji = '⚡️'
+code = ':zap:'
+name = 'zap'
+description = 'Improve performance.'
+
+
+[[gitmojis]]
+emoji = '🚑️'
+code = ':ambulance:'
+name = 'ambulance'
+description = 'Critical hotfix.'
+
+[[gitmojis]]
+emoji = '📝'
+code = ':memo:'
+name = 'memo'
+description = 'Add or update documentation.'
+
+[[gitmojis]]
+emoji = '🚀'
+code = ':rocket:'
+name = 'rocket'
+description = 'Deploy stuff.'
+
+[[gitmojis]]
+emoji = '🎉'
+code = ':tada:'
+name = 'tada'
+description = 'Begin a project.'
+
+[[gitmojis]]
+emoji = '✅'
+code = ':white_check_mark:'
+name = 'white-check-mark'
+description = 'Add, update, or pass tests.'
+
+[[gitmojis]]
+emoji = '🔒️'
+code = ':lock:'
+name = 'lock'
+description = 'Fix security issues.'
+
+[[gitmojis]]
+emoji = '🔖'
+code = ':bookmark:'
+name = 'bookmark'
+description = 'Release / Version tags.'
+
+[[gitmojis]]
+emoji = '🚨'
+code = ':rotating_light:'
+name = 'rotating-light'
+description = 'Fix compiler / linter warnings.'
+
+[[gitmojis]]
+emoji = '🚧'
+code = ':construction:'
+name = 'construction'
+description = 'Work in progress.'
+
+[[gitmojis]]
+emoji = '💚'
+code = ':green_heart:'
+name = 'green-heart'
+description = 'Fix CI Build.'
+
+[[gitmojis]]
+emoji = '⬇️'
+code = ':arrow_down:'
+name = 'arrow-down'
+description = 'Downgrade dependencies.'
+
+[[gitmojis]]
+emoji = '⬆️'
+code = ':arrow_up:'
+name = 'arrow-up'
+description = 'Upgrade dependencies.'
+
+[[gitmojis]]
+emoji = '📌'
+code = ':pushpin:'
+name = 'pushpin'
+description = 'Pin dependencies to specific versions.'
+
+[[gitmojis]]
+emoji = '👷'
+code = ':construction_worker:'
+name = 'construction-worker'
+description = 'Add or update CI build system.'
+
+[[gitmojis]]
+emoji = '♻️'
+code = ':recycle:'
+name = 'recycle'
+description = 'Refactor code.'
+
+[[gitmojis]]
+emoji = '➕'
+code = ':heavy_plus_sign:'
+name = 'heavy-plus-sign'
+description = 'Add a dependency.'
+
+[[gitmojis]]
+emoji = '➖'
+code = ':heavy_minus_sign:'
+name = 'heavy-minus-sign'
+description = 'Remove a dependency.'
+
+[[gitmojis]]
+emoji = '🔧'
+code = ':wrench:'
+name = 'wrench'
+description = 'Add or update configuration files.'
+
+[[gitmojis]]
+emoji = '🔨'
+code = ':hammer:'
+name = 'hammer'
+description = 'Add or update development scripts.'
+
+[[gitmojis]]
+emoji = '🌐'
+code = ':globe_with_meridians:'
+name = 'globe-with-meridians'
+description = 'Internationalization and localization.'
+
+[[gitmojis]]
+emoji = '✏️'
+code = ':pencil2:'
+name = 'pencil2'
+description = 'Fix typos.'
+
+[[gitmojis]]
+emoji = '💩'
+code = ':poop:'
+name = 'poop'
+description = 'Write bad code that needs to be improved.'
+
+[[gitmojis]]
+emoji = '⏪️'
+code = ':rewind:'
+name = 'rewind'
+description = 'Revert changes.'
+
+[[gitmojis]]
+emoji = '🔀'
+code = ':twisted_rightwards_arrows:'
+name = 'twisted-rightwards-arrows'
+description = 'Merge branches.'
+
+[[gitmojis]]
+emoji = '📦️'
+code = ':package:'
+name = 'package'
+description = 'Add or update compiled files or packages.'
+
+[[gitmojis]]
+emoji = '🚚'
+code = ':truck:'
+name = 'truck'
+description = 'Move or rename resources (e.g.: files, paths, routes).'
+
+[[gitmojis]]
+emoji = '💥'
+code = ':boom:'
+name = 'boom'
+description = 'Introduce breaking changes.'
+
+[[gitmojis]]
+emoji = '♿️'
+code = ':wheelchair:'
+name = 'wheelchair'
+description = 'Improve accessibility.'
+
+[[gitmojis]]
+emoji = '💡'
+code = ':bulb:'
+name = 'bulb'
+description = 'Add or update comments in source code.'
+
+[[gitmojis]]
+emoji = '🔊'
+code = ':loud_sound:'
+name = 'loud-sound'
+description = 'Add or update logs.'
+
+[[gitmojis]]
+emoji = '🔇'
+code = ':mute:'
+name = 'mute'
+description = 'Remove logs.'
+
+[[gitmojis]]
+emoji = '👥'
+code = ':busts_in_silhouette:'
+name = 'busts-in-silhouette'
+description = 'Add or update contributor(s).'
+
+[[gitmojis]]
+emoji = '🚸'
+code = ':children_crossing:'
+name = 'children-crossing'
+description = 'Improve user experience / usability.'
+
+[[gitmojis]]
+emoji = '🏗️'
+code = ':building_construction:'
+name = 'building-construction'
+description = 'Make architectural changes.'
+
+[[gitmojis]]
+emoji = '⚗️'
+code = ':alembic:'
+name = 'alembic'
+description = 'Perform experiments.'
+
+[[gitmojis]]
+emoji = '🚩'
+code = ':triangular_flag_on_post:'
+name = 'triangular-flag-on-post'
+description = 'Add, update, or remove feature flags.'
+
+[[gitmojis]]
+emoji = '🗑️'
+code = ':wastebasket:'
+name = 'wastebasket'
+description = 'Deprecate code that needs to be cleaned up.'
+
+[[gitmojis]]
+emoji = '🩹'
+code = ':adhesive_bandage:'
+name = 'adhesive-bandage'
+description = 'Simple fix for a non-critical issue.'
+
+[[gitmojis]]
+emoji = '🧪'
+code = ':test_tube:'
+name = 'test-tube'
+description = 'Add a failing test.'
+
+[[gitmojis]]
+emoji = '🩺'
+code = ':stethoscope:'
+name = 'stethoscope'
+description = 'Add or update healthcheck.'
+
+[[gitmojis]]
+emoji = '🧱'
+code = ':bricks:'
+name = 'bricks'
+description = 'Infrastructure related changes.'
+
+[[gitmojis]]
+emoji = '🧑‍💻'
+code = ':technologist:'
+name = 'technologist'
+description = 'Improve developer experience'
+
+[[gitmojis]]
+emoji = '🧵'
+code = ':thread:'
+name = 'thread'
+description = 'Add or update code related to multithreading or concurrency.'
