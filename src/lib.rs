@@ -15,6 +15,10 @@ mod error;
 mod git;
 mod model;
 
+use std::io::stdout;
+
+use clap::CommandFactory;
+use clap_complete::generate;
 use console::Term;
 
 pub use self::cli::*;
@@ -47,5 +51,9 @@ pub async fn run(settings: Settings, term: &Term) -> Result<()> {
             HookOperation::Remove => cmd::remove_hook().await,
             HookOperation::Apply { dest, source } => cmd::apply_hook(dest, source, term).await,
         },
+        Command::Completion { shell } => {
+            generate(shell, &mut Settings::into_app(), "gitmoji", &mut stdout());
+            Ok(())
+        }
     }
 }

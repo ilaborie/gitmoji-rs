@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use clap_complete::Shell;
 use url::Url;
 
 #[derive(Debug, Clone, Parser)]
@@ -68,6 +69,12 @@ pub enum Command {
     #[cfg(feature = "hook")]
     #[clap(subcommand)]
     Hook(HookOperation),
+
+    /// Generate completion for shell
+    Completion {
+        /// The shell (bash, zsh, fish, elvish, powershell)
+        shell: Shell,
+    },
 }
 
 #[cfg(feature = "hook")]
