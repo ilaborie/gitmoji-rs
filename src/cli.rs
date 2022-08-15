@@ -39,7 +39,15 @@ pub enum Command {
     },
 
     /// Interactively commit using the prompts
-    Commit, // TODO [#4] add flags (add, amend),
+    Commit {
+        #[clap(long)]
+        /// Add the `--all` flag for git commit command
+        all: bool,
+
+        #[clap(long)]
+        /// Add the `--amend` flag for git commit command
+        amend: bool,
+    },
 
     /// Sync emoji list with the repository
     Update {
