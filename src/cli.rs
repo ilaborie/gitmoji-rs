@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use url::Url;
 
 #[derive(Debug, Clone, Parser)]
 #[clap(author, version, about, long_about = None)]
@@ -41,7 +42,10 @@ pub enum Command {
     Commit, // TODO [#4] add flags (add, amend),
 
     /// Sync emoji list with the repository
-    Update, // TODO [#5] allow changing the URL
+    Update {
+        /// Change the update URL
+        url: Option<Url>,
+    },
 
     /// List all available gitmojis
     List,
