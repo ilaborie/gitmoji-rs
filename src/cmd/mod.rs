@@ -1,7 +1,10 @@
+use std::process::exit;
+
+use console::Term;
 use tokio::process::Command;
 use tracing::{info, warn};
 
-use crate::{git, EmojiFormat, Error, GitmojiConfig, Result};
+use crate::{git, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG};
 
 mod commit;
 mod config;
@@ -19,6 +22,29 @@ use self::list::print_gitmojis;
 use self::search::filter;
 use self::update::update_gitmojis;
 
+async fn get_config_or_stop() -> GitmojiConfig {
+    match read_config_or_fail().await {
+        Ok(config) => config,
+        Err(err) => {
+            warn!("Oops, cannot read config because {err}");
+            eprintln!("⚠️  No configuration found, try run `gitmoji init` to fetch a configuration");
+            exit(EXIT_NO_CONFIG)
+        }
+    }
+}
+
+async fn update_config_or_stop(config: GitmojiConfig) -> GitmojiConfig {
+    let url = config.update_url().to_string();
+    match update_gitmojis(config).await {
+        Ok(config) => config,
+        Err(err) => {
+            warn!("Oops, cannot update the config because {err}");
+            eprintln!("⚠️  Configuration not updated, maybe check the update url '{url}'");
+            exit(EXIT_CANNOT_UPDATE)
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 struct CommitTitleDescription {
     title: String,
@@ -26,13 +52,16 @@ struct CommitTitleDescription {
 }
 
 #[tracing::instrument]
-async fn ask_commit_title_description(config: &GitmojiConfig) -> Result<CommitTitleDescription> {
+async fn ask_commit_title_description(
+    config: &GitmojiConfig,
+    term: &Term,
+) -> Result<CommitTitleDescription> {
     let CommitParams {
         gitmoji,
         scope,
         title,
         description,
-    } = get_commit_params(config)?;
+    } = get_commit_params(config, term)?;
 
     let gitmoji = match config.format() {
         EmojiFormat::UseCode => gitmoji.code(),
@@ -50,11 +79,11 @@ async fn ask_commit_title_description(config: &GitmojiConfig) -> Result<CommitTi
 
 /// Commit using Gitmoji
 #[tracing::instrument]
-pub async fn commit() -> Result<()> {
-    let config = read_config_or_fail().await?;
+pub async fn commit(term: &Term) -> Result<()> {
+    let config = get_config_or_stop().await;
 
     let CommitTitleDescription { title, description } =
-        ask_commit_title_description(&config).await?;
+        ask_commit_title_description(&config, term).await?;
 
     // Add before commit
     if config.auto_add() {
@@ -71,14 +100,14 @@ pub async fn commit() -> Result<()> {
 
 /// Configure Gitmoji
 #[tracing::instrument]
-pub async fn config(default: bool) -> Result<()> {
+pub async fn config(default: bool, term: &Term) -> Result<()> {
     let config = if default {
         GitmojiConfig::default()
     } else {
-        create_config()?
+        create_config(term)?
     };
     info!("Loading gitmojis from {}", config.update_url());
-    update_gitmojis(config).await?;
+    update_config_or_stop(config).await;
 
     Ok(())
 }
@@ -86,25 +115,17 @@ pub async fn config(default: bool) -> Result<()> {
 /// Search a gitmoji
 #[tracing::instrument]
 pub async fn search(text: &str) -> Result<()> {
-    let config = read_config_or_fail().await?;
+    let config = get_config_or_stop().await;
     let result = filter(config.gitmojis(), text);
     print_gitmojis(&result);
-
     Ok(())
 }
 
 /// List all Gitmojis
 #[tracing::instrument]
 pub async fn list() -> Result<()> {
-    match read_config_or_fail().await {
-        Ok(result) => print_gitmojis(result.gitmojis()),
-        Err(err) => {
-            warn!("Oops, cannot read config because {err}");
-            eprintln!(
-                "⚠️ No configuration found, try run `gitmoji update` to fetch a configuration"
-            );
-        }
-    }
+    let config = get_config_or_stop().await;
+    print_gitmojis(config.gitmojis());
     Ok(())
 }
 
@@ -112,7 +133,7 @@ pub async fn list() -> Result<()> {
 #[tracing::instrument]
 pub async fn update_config() -> Result<()> {
     let config = read_config_or_default().await;
-    let result = update_gitmojis(config).await?;
+    let result = update_config_or_stop(config).await;
     print_gitmojis(result.gitmojis());
 
     Ok(())
@@ -135,13 +156,17 @@ pub async fn remove_hook() -> Result<()> {
 /// Apply hook
 #[cfg(feature = "hook")]
 #[tracing::instrument]
-pub async fn apply_hook(dest: std::path::PathBuf, source: Option<String>) -> Result<()> {
+pub async fn apply_hook(
+    dest: std::path::PathBuf,
+    source: Option<String>,
+    term: &Term,
+) -> Result<()> {
     use tokio::io::{AsyncReadExt, AsyncSeekExt, AsyncWriteExt};
 
-    let config = read_config_or_fail().await?;
+    let config = get_config_or_stop().await;
 
     let CommitTitleDescription { title, description } =
-        ask_commit_title_description(&config).await?;
+        ask_commit_title_description(&config, term).await?;
 
     info!("Write commit message to {dest:?} with source: {source:?}");
     let mut file = tokio::fs::OpenOptions::new()
