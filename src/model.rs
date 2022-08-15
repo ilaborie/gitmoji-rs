@@ -81,6 +81,11 @@ impl GitmojiConfig {
         self.update_url.as_ref()
     }
 
+    /// Set the URL used for update
+    pub fn set_update_url(&mut self, update_url: Url) {
+        self.update_url = update_url;
+    }
+
     /// The last time the gitmoji list was updated
     #[must_use]
     pub const fn last_update(&self) -> Option<OffsetDateTime> {

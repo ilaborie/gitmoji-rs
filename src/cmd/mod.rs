@@ -3,6 +3,7 @@ use std::process::exit;
 use console::Term;
 use tokio::process::Command;
 use tracing::{info, warn};
+use url::Url;
 
 use crate::{git, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG};
 
@@ -131,8 +132,11 @@ pub async fn list() -> Result<()> {
 
 /// Update the configuration with the URL
 #[tracing::instrument]
-pub async fn update_config() -> Result<()> {
-    let config = read_config_or_default().await;
+pub async fn update_config(url: Option<Url>) -> Result<()> {
+    let mut config = read_config_or_default().await;
+    if let Some(url) = url {
+        config.set_update_url(url);
+    }
     let result = update_config_or_stop(config).await;
     print_gitmojis(result.gitmojis());
 
