@@ -19,6 +19,7 @@ hook = []
 
 [dependencies]
 clap = { version = "3.2", features = ["derive"] }
+clap_complete = "3.2"
 
 serde = { version = "1", features = ["derive"] }
 toml = "0.5"
