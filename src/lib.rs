@@ -52,7 +52,8 @@ pub async fn run(settings: Settings, term: &Term) -> Result<()> {
             HookOperation::Apply { dest, source } => cmd::apply_hook(dest, source, term).await,
         },
         Command::Completion { shell } => {
-            generate(shell, &mut Settings::into_app(), "gitmoji", &mut stdout());
+            let mut cmd = <Settings as CommandFactory>::command();
+            generate(shell, &mut cmd, "gitmoji", &mut stdout());
             Ok(())
         }
     }
