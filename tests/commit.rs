@@ -8,7 +8,7 @@ pub use self::common::*;
 #[test_log::test(tokio::test)]
 #[serial]
 #[ignore = "does not work"]
-async fn should_have_commit_command() -> rexpect::errors::Result<()> {
+async fn should_have_commit_command() -> Result<(), rexpect::error::Error> {
     let _dir = home_isolation();
     let git_repo = GitRepository::new();
     git_repo.touch("plop.txt");

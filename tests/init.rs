@@ -10,7 +10,7 @@ pub use self::common::*;
 #[test_log::test(tokio::test)]
 #[serial]
 #[ignore = "does not work on CI"]
-async fn should_have_init_command_default_values() -> rexpect::errors::Result<()> {
+async fn should_have_init_command_default_values() -> Result<(), rexpect::error::Error> {
     let _dir = home_isolation();
 
     let mut cmd = cargo_bin_command("gitmoji");
@@ -80,7 +80,7 @@ async fn gitmoji_init(
     signed: bool,
     scope: bool,
     url: &str,
-) -> rexpect::errors::Result<GitmojiConfig> {
+) -> Result<GitmojiConfig, rexpect::error::Error> {
     let _dir = home_isolation();
 
     let mut cmd = cargo_bin_command("gitmoji");

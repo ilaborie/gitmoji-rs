@@ -18,8 +18,8 @@ path = "src/main.rs"
 hook = []
 
 [dependencies]
-clap = { version = "4.0", features = ["derive"] }
-clap_complete = "4.0"
+clap = { version = "4.1", features = ["derive"] }
+clap_complete = "4.1"
 
 serde = { version = "1", features = ["derive"] }
 toml = "0.5"
@@ -32,7 +32,7 @@ indicatif = "0.17"
 
 fuzzy-matcher = "0.3"
 
-tokio = { version = "1.19", features = [
+tokio = { version = "1.23", features = [
     "process",
     "fs",
     "macros",
@@ -53,13 +53,13 @@ tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
 assert2 = "0.3"
 assert_fs = "1.0"
 assert_cmd = "2.0"
-rexpect = "0.4"
+rexpect = "0.5"
 anyhow = "1.0"
 test-log = { version = "0.2", features = ["trace"], default-features = false }
-serial_test = "0.9"
-once_cell = "1.13"
+serial_test = "0.10"
+once_cell = "1"
 wiremock = "0.5"
-rstest = "0.15.0"
+rstest = "0.16"
 
 [profile.release]
 # Optimize performance
