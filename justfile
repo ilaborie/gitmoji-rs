@@ -18,6 +18,8 @@ requirements:
     cargo install cargo-deny
     @echo "Install bat"
     cargo install bat
+    @echo "Install cargo-release for release"
+    cargo install cargo-release
 
 # Run TDD mode
 tdd:
@@ -69,3 +71,7 @@ doc:
 # Install to the cargo bin path
 install:
     cargo install --path .
+
+# Release
+release *ARGS="--help":
+    cargo release {{ARGS}}
