@@ -13,6 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### 🐛 Fixed
 ### 🛂 Security
 
+## [v0.3.2]
+
+### 🔀 Changed
+
+- Bump dependencies
+
+## [v0.3.1]
+
+### 🔀 Changed
+
+- Bump dependencies
+
 ## [v0.3.0]
 
 ### ✨ Added
