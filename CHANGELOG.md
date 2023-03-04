@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 <csr-read-only-do-not-edit/>
 
- - 4 commits contributed to the release.
+ - 5 commits contributed to the release.
  - 46 days passed between releases.
  - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Adjusting changelogs prior to release of gitmoji-rs v0.3.3 ([`5efd804`](https://github.com/ilaborie/gitmoji-rs/commit/5efd804f0129ec1917722fa8fe80dfc6fb95e475))
     - 🎨 remove obsolete cargo section ([`a277c5d`](https://github.com/ilaborie/gitmoji-rs/commit/a277c5d92930522d3b47b9610c64a0d5b81b3f0e))
     - Adjusting changelogs prior to release of gitmoji-rs v0.3.3 ([`e6fe9bb`](https://github.com/ilaborie/gitmoji-rs/commit/e6fe9bbb5791085a461c1b84ef867a8ae11ec648))
     - 📝 Use cargo smart-release changelog ([`b19e66a`](https://github.com/ilaborie/gitmoji-rs/commit/b19e66a2665bce37fc873eb4fb8a7eee0fa25c59))
