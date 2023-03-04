@@ -565,7 +565,7 @@ dependencies = [
 
 [[package]]
 name = "gitmoji-rs"
-version = "0.3.2"
+version = "0.3.3"
 dependencies = [
  "anyhow",
  "assert2",

@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 <csr-read-only-do-not-edit/>
 
- - 1 commit contributed to the release.
+ - 3 commits contributed to the release.
  - 46 days passed between releases.
  - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
@@ -20,10 +20,16 @@ All notable changes to this project will be documented in this file.
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Adjusting changelogs prior to release of gitmoji-rs v0.3.3 ([`3214863`](https://github.com/ilaborie/gitmoji-rs/commit/32148631240b9fad8c50dea644a29b96b875e3cc))
+    - 📝 Use cargo smart-release changelog ([`b19e66a`](https://github.com/ilaborie/gitmoji-rs/commit/b19e66a2665bce37fc873eb4fb8a7eee0fa25c59))
     - ⬆️ Replace toml by toml_edit ([`9bc4dbd`](https://github.com/ilaborie/gitmoji-rs/commit/9bc4dbd1aedee89c99819a72cf35ede17287dd71))
 </details>
 
+## 0.3.3 (2023-03-04)
+
 ## v0.3.2 (2023-01-17)
+
+<csr-id-d02150b5077798024083f9762944dd6479270cb1/>
 
 ### Chore
 
