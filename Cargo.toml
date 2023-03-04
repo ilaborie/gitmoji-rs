@@ -56,6 +56,3 @@ wiremock = "0.5"
 # Optimize performance
 lto = true
 codegen-units = 1
-
-[workspace.metadata.release]
-tag-message = "🔖 Release {{crate_name}} version {{version}}"
