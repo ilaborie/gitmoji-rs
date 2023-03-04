@@ -134,7 +134,7 @@ Search a gitmoji
 
 ## Missing features
 
-Due to a bug, we cannot use yet.
+Due to a bug, we cannot use as a git hook yet.
 
 See [Issue #1](./issues/1), help welcome
 

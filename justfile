@@ -75,5 +75,5 @@ install:
     cargo install --path .
 
 # Release
-release *ARGS="--help":
-    cargo smart-release {{ARGS}}
+release *ARGS:
+    cargo smart-release --update-crates-index gitmoji-rs {{ARGS}}

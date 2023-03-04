@@ -1,54 +1,152 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## Unreleased
 
-### ✨ Added
-### 🔀 Changed
-### ⚠️ Deprecated
-### ❌ Removed
-### 🐛 Fixed
-### 🛂 Security
+### Commit Statistics
 
-## [v0.3.2]
+<csr-read-only-do-not-edit/>
 
-### 🔀 Changed
+ - 1 commit contributed to the release.
+ - 46 days passed between releases.
+ - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
 
-- Bump dependencies
+### Commit Details
 
-## [v0.3.1]
+<csr-read-only-do-not-edit/>
 
-### 🔀 Changed
+<details><summary>view details</summary>
 
-- Bump dependencies
+ * **Uncategorized**
+    - ⬆️ Replace toml by toml_edit ([`9bc4dbd`](https://github.com/ilaborie/gitmoji-rs/commit/9bc4dbd1aedee89c99819a72cf35ede17287dd71))
+</details>
 
-## [v0.3.0]
+## v0.3.2 (2023-01-17)
 
-### ✨ Added
+### Chore
 
-- Add `completion` command to generate shell completion
+ - <csr-id-d02150b5077798024083f9762944dd6479270cb1/> Release gitmoji-rs version 0.3.2
 
-### 🔀 Changed
+### Commit Statistics
 
-- Allow changing the URL on an `update` command
-- Allow pass flag `--all` and `--amend` to `commit` command
+<csr-read-only-do-not-edit/>
 
-## [v0.2.0]
+ - 4 commits contributed to the release.
+ - 107 days passed between releases.
+ - 1 commit was understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
 
-### 🔀 Changed
+### Commit Details
 
-- ✅ Added some tests
-- 👷‍♂️ Improve CI
+<csr-read-only-do-not-edit/>
 
-### [v0.1.0]
+<details><summary>view details</summary>
 
-### ✨ Added
+ * **Uncategorized**
+    - 🔖 Release gitmoji-rs version 0.3.2 ([`c03b974`](https://github.com/ilaborie/gitmoji-rs/commit/c03b9748c3d4034a8d6e60c9987fa052f717cb28))
+    - Release gitmoji-rs version 0.3.2 ([`d02150b`](https://github.com/ilaborie/gitmoji-rs/commit/d02150b5077798024083f9762944dd6479270cb1))
+    - 💚 Remove check semver version actions ([`aca8f8d`](https://github.com/ilaborie/gitmoji-rs/commit/aca8f8d39db3cec039b85793d66dc4ed55ce47be))
+    - ⬆️ Bump dependencies ([`439335a`](https://github.com/ilaborie/gitmoji-rs/commit/439335a9d37eab2caa92bb39b5cc565eecb8d287))
+</details>
 
-- 🚀 starting the project
-- ✨ Add `init` command to create the configuration
-- ✨ Add `list` command to list configured gitmojis
-- ✨ Add `search` command to search a gitmoji
-- ✨ Add `search` command to search a gitmoji
+## v0.3.1 (2022-10-02)
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 1 commit contributed to the release.
+ - 47 days passed between releases.
+ - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - ✨ Bump dependencies (clap v4) ([`6686dbf`](https://github.com/ilaborie/gitmoji-rs/commit/6686dbf8d64e907190b0c4e9b30461ab6b5c3358))
+</details>
+
+## v0.3.0 (2022-08-16)
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 6 commits contributed to the release.
+ - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - Wip ([`dd3d0b2`](https://github.com/ilaborie/gitmoji-rs/commit/dd3d0b2b520d5547f7b5726348d781138644b0b3))
+    - 🔖 Version 0.3.0 ([`5cb2fe5`](https://github.com/ilaborie/gitmoji-rs/commit/5cb2fe5772b67666f85906374eda9a7240e80109))
+    - ✨ Add completion command ([`2c46a1f`](https://github.com/ilaborie/gitmoji-rs/commit/2c46a1f277a82fe1618e7d225c7e7c24318992f8))
+    - ✨ Allow local configuration ([`66b1945`](https://github.com/ilaborie/gitmoji-rs/commit/66b1945696fcff03a021ce141cda321dc9897b59))
+    - :sparkles: Add `--all` and `--amend` flag for commit ([`019710d`](https://github.com/ilaborie/gitmoji-rs/commit/019710db5783f6e38f7691676c32a105f641319d))
+    - :sparkles: Allow changing the URL during update ([`5ae7204`](https://github.com/ilaborie/gitmoji-rs/commit/5ae7204f193d249be7b9afbd3a31181a6a411771))
+</details>
+
+## v0.2.0 (2022-08-15)
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 5 commits contributed to the release over the course of 21 calendar days.
+ - 21 days passed between releases.
+ - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - :bookmark: v0.2.0 ([`583ea19`](https://github.com/ilaborie/gitmoji-rs/commit/583ea19e7ac3dd04eceea5124af9b619d5e18a3f))
+    - :white_check_mark: Added some tests ([`46d0e8c`](https://github.com/ilaborie/gitmoji-rs/commit/46d0e8cb29265a27a195356b13b5c34e12bd4909))
+    - :construction_worker: Improve CI ([`7b5580c`](https://github.com/ilaborie/gitmoji-rs/commit/7b5580c9612c6cc197de6616c923270fc79bf9dd))
+    - 📝 Update README ([`9cd01fe`](https://github.com/ilaborie/gitmoji-rs/commit/9cd01fe2c166bba0ee1edd4c41b97ce3eb21200c))
+    - 📝 Update Cargo.toml ([`7b36fb6`](https://github.com/ilaborie/gitmoji-rs/commit/7b36fb604ef735a996e9f184da100d0be1b6533a))
+</details>
+
+## v0.1.0 (2022-07-25)
+
+### Commit Statistics
+
+<csr-read-only-do-not-edit/>
+
+ - 9 commits contributed to the release over the course of 14 calendar days.
+ - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 0 issues like '(#ID)' were seen in commit messages
+
+### Commit Details
+
+<csr-read-only-do-not-edit/>
+
+<details><summary>view details</summary>
+
+ * **Uncategorized**
+    - 📝 Changelog for v0.1.0 ([`8c69639`](https://github.com/ilaborie/gitmoji-rs/commit/8c69639413cb5004161e313da93d0dd588b3300d))
+    - 🔧 Disable bloat workflow ([`6e5016e`](https://github.com/ilaborie/gitmoji-rs/commit/6e5016e2fe03a02cc80c5c49566e93ed5dd2cce8))
+    - 🐛 Fix release workflow ([`6e20344`](https://github.com/ilaborie/gitmoji-rs/commit/6e2034456163d00b6575737895080e8438a91718))
+    - Merge pull request #7 from ilaborie/fix/workflows ([`bbce2f0`](https://github.com/ilaborie/gitmoji-rs/commit/bbce2f0ea255197e4cd3edb122752ad70a4612a1))
+    - :bug: Fix Workflows ([`17fedbc`](https://github.com/ilaborie/gitmoji-rs/commit/17fedbcf58dd9817019934076f7280b3d9aa3e89))
+    - Merge pull request #6 from ilaborie/feature/issues-templates ([`321d5f6`](https://github.com/ilaborie/gitmoji-rs/commit/321d5f6c4f1ceb7998ea40c419436216078a3c46))
+    - 🔧 Update issue templates ([`6032593`](https://github.com/ilaborie/gitmoji-rs/commit/60325939693340e8b60af70a01caef5740d2a962))
+    - 🚀 Initial version ([`31f4ee1`](https://github.com/ilaborie/gitmoji-rs/commit/31f4ee177c0da4ee5ed7c3e2ffb429be5ed1102c))
+    - Empty ([`a1ca851`](https://github.com/ilaborie/gitmoji-rs/commit/a1ca851cf458c8f60067bc75c9ed41c834861d45))
+</details>
+
