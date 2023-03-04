@@ -2,13 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 
-## Unreleased
+## 0.3.3 (2023-03-04)
 
 ### Commit Statistics
 
 <csr-read-only-do-not-edit/>
 
- - 3 commits contributed to the release.
+ - 4 commits contributed to the release.
  - 46 days passed between releases.
  - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
@@ -20,12 +20,11 @@ All notable changes to this project will be documented in this file.
 <details><summary>view details</summary>
 
  * **Uncategorized**
-    - Adjusting changelogs prior to release of gitmoji-rs v0.3.3 ([`3214863`](https://github.com/ilaborie/gitmoji-rs/commit/32148631240b9fad8c50dea644a29b96b875e3cc))
+    - 🎨 remove obsolete cargo section ([`a277c5d`](https://github.com/ilaborie/gitmoji-rs/commit/a277c5d92930522d3b47b9610c64a0d5b81b3f0e))
+    - Adjusting changelogs prior to release of gitmoji-rs v0.3.3 ([`e6fe9bb`](https://github.com/ilaborie/gitmoji-rs/commit/e6fe9bbb5791085a461c1b84ef867a8ae11ec648))
     - 📝 Use cargo smart-release changelog ([`b19e66a`](https://github.com/ilaborie/gitmoji-rs/commit/b19e66a2665bce37fc873eb4fb8a7eee0fa25c59))
     - ⬆️ Replace toml by toml_edit ([`9bc4dbd`](https://github.com/ilaborie/gitmoji-rs/commit/9bc4dbd1aedee89c99819a72cf35ede17287dd71))
 </details>
-
-## 0.3.3 (2023-03-04)
 
 ## v0.3.2 (2023-01-17)
 
