@@ -105,7 +105,7 @@ async fn read_config() -> Result<GitmojiConfig> {
     let config_file = get_config_file().await?;
     info!("Read config file {config_file:?}");
     let bytes = fs::read(config_file).await?;
-    let mut config = toml::from_slice::<GitmojiConfig>(&bytes)?;
+    let mut config = toml_edit::de::from_slice::<GitmojiConfig>(&bytes)?;
     let local_config = read_local_config().await?;
     config.merge(&local_config);
 
@@ -121,7 +121,7 @@ async fn read_local_config() -> Result<LocalGitmojiConfig> {
     let result = if file.exists() {
         info!("Read local config file {file:?}");
         let bytes = fs::read(file).await?;
-        toml::from_slice(&bytes)?
+        toml_edit::de::from_slice(&bytes)?
     } else {
         warn!("Cannot read local config, file {path:?} does not exists");
         LocalGitmojiConfig::default()
@@ -149,7 +149,7 @@ pub async fn read_config_or_default() -> GitmojiConfig {
 /// Might fail during serialization of config
 pub async fn write_config(config: &GitmojiConfig) -> Result<()> {
     let config_file = get_config_file().await?;
-    let contents = toml::to_string_pretty(config)?;
+    let contents = toml_edit::ser::to_string_pretty(config)?;
     info!("Update config file {config_file:?}");
     fs::write(config_file, contents).await?;
     Ok(())

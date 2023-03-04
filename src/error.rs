@@ -27,11 +27,11 @@ pub enum Error {
 
     #[error(transparent)]
     /// TOML serialization error
-    TomlSerializeError(#[from] toml::ser::Error),
+    TomlSerializeError(#[from] toml_edit::ser::Error),
 
     #[error(transparent)]
     /// TOML deserialization error
-    TomlDeserializeError(#[from] toml::de::Error),
+    TomlDeserializeError(#[from] toml_edit::de::Error),
 }
 
 /// Gitmojis result

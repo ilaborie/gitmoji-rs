@@ -18,8 +18,8 @@ requirements:
     cargo install cargo-deny
     @echo "Install bat"
     cargo install bat
-    @echo "Install cargo-release for release"
-    cargo install cargo-release
+    @echo "Install cargo-smart-release for release"
+    cargo install cargo-smart-release
 
 # Run TDD mode
 tdd:
@@ -38,6 +38,7 @@ test:
 # Format the code
 format:
     cargo +nightly fmt
+    cargo sort --workspace --grouped
 
 # Format the code
 lint:
@@ -49,6 +50,7 @@ lint:
 check:
     @echo "🦀 Check formatting..."
     cargo +nightly fmt --all -- --check
+    cargo sort --workspace --grouped --check
     @just lint
     @just test
 
@@ -74,4 +76,4 @@ install:
 
 # Release
 release *ARGS="--help":
-    cargo release {{ARGS}}
+    cargo smart-release {{ARGS}}

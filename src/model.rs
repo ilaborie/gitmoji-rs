@@ -262,11 +262,11 @@ mod tests {
         };
 
         // Serialize
-        let toml = toml::to_string(&gitmoji);
+        let toml = toml_edit::ser::to_string(&gitmoji);
         let_assert!(Ok(toml) = toml);
 
         // Deserialize
-        let result = toml::from_str::<Gitmoji>(&toml);
+        let result = toml_edit::de::from_str::<Gitmoji>(&toml);
         let_assert!(Ok(result) = result);
 
         check!(result == gitmoji);
@@ -283,11 +283,11 @@ mod tests {
         });
 
         // Serialize
-        let toml = toml::to_string(&config);
+        let toml = toml_edit::ser::to_string(&config);
         let_assert!(Ok(toml) = toml);
 
         // Deserialize
-        let result = toml::from_str::<GitmojiConfig>(&toml);
+        let result = toml_edit::de::from_str::<GitmojiConfig>(&toml);
         let_assert!(Ok(result) = result);
 
         check!(result == config);
