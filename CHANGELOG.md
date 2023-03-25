@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 <csr-read-only-do-not-edit/>
 
- - 9 commits contributed to the release over the course of 21 calendar days.
+ - 11 commits contributed to the release over the course of 21 calendar days.
  - 67 days passed between releases.
  - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file.
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Adjusting changelogs prior to release of gitmoji-rs v0.3.3 ([`98e506c`](https://github.com/ilaborie/gitmoji-rs/commit/98e506cf373d5b1c72817be9000ff1f9ad75d2d5))
+    - 📝 Update changelogs ([`13991ee`](https://github.com/ilaborie/gitmoji-rs/commit/13991ee6b0898ada985252da974624c8d1a3ca32))
     - ✨ Check that the stage is not empty before commit ([`17445d5`](https://github.com/ilaborie/gitmoji-rs/commit/17445d5a4ae784e82a5dc7401f90943e61ae57a6))
     - 💥 Add a git specific error ([`82c96db`](https://github.com/ilaborie/gitmoji-rs/commit/82c96db1fb829d7597c64c9e6d3ec2b081dbfd80))
     - ⬆️ Bump dependencies ([`a3cc629`](https://github.com/ilaborie/gitmoji-rs/commit/a3cc629283c2ab6730c5591a9584994226985291))
@@ -31,7 +33,7 @@ All notable changes to this project will be documented in this file.
     - ⬆️ Replace toml by toml_edit ([`9bc4dbd`](https://github.com/ilaborie/gitmoji-rs/commit/9bc4dbd1aedee89c99819a72cf35ede17287dd71))
 </details>
 
-## 0.3.3 (2023-03-04)
+## 0.3.3 (2023-03-25)
 
 ## v0.3.2 (2023-01-17)
 
