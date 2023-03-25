@@ -2,7 +2,16 @@ use std::process::ExitStatus;
 
 use tokio::process::Command;
 
-use crate::Result;
+#[derive(Debug, thiserror::Error)]
+#[error("Fail to run `{command}` because {source}")]
+pub struct GitCommandError {
+    /// The source error
+    source: std::io::Error,
+    /// The command
+    command: String,
+}
+
+type Result<T> = std::result::Result<T, GitCommandError>;
 
 pub(crate) async fn commit(
     all: bool,
@@ -27,18 +36,28 @@ pub(crate) async fn commit(
         args.push("-m");
         args.push(description);
     }
-    let status = Command::new("git").args(&args).status().await?;
+    let status = Command::new("git")
+        .args(&args)
+        .status()
+        .await
+        .map_err(|source| GitCommandError {
+            source,
+            command: format!("git {}", args.join(" ")),
+        })?;
 
     Ok(status)
 }
 
 pub(crate) async fn get_config_value(config_key: &str) -> Result<String> {
+    let args = ["config", "--get", config_key];
     let output = Command::new("git")
-        .arg("config")
-        .arg("--get")
-        .arg(config_key)
+        .args(args)
         .output()
-        .await?;
+        .await
+        .map_err(|source| GitCommandError {
+            source,
+            command: format!("git {}", args.join(" ")),
+        })?;
 
     let result = String::from_utf8_lossy(&output.stdout).trim().to_string();
     Ok(result)
@@ -46,11 +65,15 @@ pub(crate) async fn get_config_value(config_key: &str) -> Result<String> {
 
 #[cfg(feature = "hook")]
 pub(crate) async fn get_git_dir() -> Result<std::path::PathBuf> {
+    let args = ["rev-parse", "--absolute-git-dir"];
     let output = Command::new("git")
-        .arg("rev-parse")
-        .arg("--absolute-git-dir")
+        .args(args)
         .output()
-        .await?;
+        .await
+        .map_err(|source| GitCommandError {
+            source,
+            command: format!("git {}", args.join(" ")),
+        })?;
 
     let result = String::from_utf8_lossy(&output.stdout).trim().to_string();
     let result = std::path::PathBuf::from(result);

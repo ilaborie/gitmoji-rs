@@ -1,5 +1,8 @@
+use crate::git::GitCommandError;
+
 #[derive(Debug, thiserror::Error)]
 /// Gitmojis errors
+#[non_exhaustive]
 pub enum Error {
     #[error(transparent)]
     /// Cannot retrieve gitmojis
@@ -20,6 +23,10 @@ pub enum Error {
     #[error(transparent)]
     /// I/O error
     IoError(#[from] std::io::Error),
+
+    #[error(transparent)]
+    /// Issue while running a git command
+    GitCommandError(#[from] GitCommandError),
 
     #[error(transparent)]
     /// Invalid URL

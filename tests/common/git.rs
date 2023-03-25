@@ -2,8 +2,16 @@ use std::path::PathBuf;
 use std::process::Command;
 use std::str::FromStr;
 
+use anyhow::Ok;
 use assert_fs::fixture::{FileTouch, PathChild};
 use assert_fs::TempDir;
+
+#[derive(Debug, thiserror::Error)]
+pub enum GitError {
+    /// A Git command error
+    #[error(transparent)]
+    IoError(#[from] std::io::Error),
+}
 
 pub struct GitRepository {
     #[allow(dead_code)]
@@ -25,7 +33,6 @@ impl GitRepository {
     pub fn path(&self) -> PathBuf {
         self.root.to_path_buf()
     }
-
     fn init(&self) {
         let status = Command::new("git")
             .current_dir(&self.root)
