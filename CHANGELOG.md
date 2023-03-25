@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 
 <csr-read-only-do-not-edit/>
 
- - 8 commits contributed to the release over the course of 21 calendar days.
+ - 9 commits contributed to the release over the course of 21 calendar days.
  - 67 days passed between releases.
  - 0 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - ✨ Check that the stage is not empty before commit ([`17445d5`](https://github.com/ilaborie/gitmoji-rs/commit/17445d5a4ae784e82a5dc7401f90943e61ae57a6))
     - 💥 Add a git specific error ([`82c96db`](https://github.com/ilaborie/gitmoji-rs/commit/82c96db1fb829d7597c64c9e6d3ec2b081dbfd80))
     - ⬆️ Bump dependencies ([`a3cc629`](https://github.com/ilaborie/gitmoji-rs/commit/a3cc629283c2ab6730c5591a9584994226985291))
     - Adjusting changelogs prior to release of gitmoji-rs v0.3.3 ([`078e3eb`](https://github.com/ilaborie/gitmoji-rs/commit/078e3ebfc113a54c21cfbedf8b560bda81487aab))
