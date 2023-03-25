@@ -44,7 +44,7 @@ pub(crate) async fn commit(
             source,
             command: format!("git {}", args.join(" ")),
         })?;
-
+    
     Ok(status)
 }
 
@@ -61,6 +61,27 @@ pub(crate) async fn get_config_value(config_key: &str) -> Result<String> {
 
     let result = String::from_utf8_lossy(&output.stdout).trim().to_string();
     Ok(result)
+}
+
+
+pub(crate) async fn has_staged_changes() -> Result<bool> {
+    let args = ["status", "--porcelain"];
+    let output = Command::new("git")
+        .args(args)
+        .output()
+        .await
+        .map_err(|source| GitCommandError {
+            source,
+            command: format!("git {}", args.join(" ")),
+        })?;
+
+    for line in String::from_utf8_lossy(&output.stdout).lines() {
+        let first_char = line.chars().next().unwrap_or_default();
+        if  first_char != ' ' {
+            return Ok(true);
+        }
+    }
+    Ok(false)
 }
 
 #[cfg(feature = "hook")]

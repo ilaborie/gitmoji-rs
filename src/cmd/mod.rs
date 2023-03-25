@@ -4,6 +4,7 @@ use console::Term;
 use tracing::{info, warn};
 use url::Url;
 
+use crate::git::has_staged_changes;
 use crate::{git, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG};
 
 mod commit;
@@ -81,6 +82,11 @@ async fn ask_commit_title_description(
 #[tracing::instrument(skip(term))]
 pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
     let config = get_config_or_stop().await;
+
+    if !amend && !has_staged_changes().await? {
+        eprintln!("No change to commit");
+        return Ok(());
+    }
 
     let CommitTitleDescription { title, description } =
         ask_commit_title_description(&config, term).await?;
