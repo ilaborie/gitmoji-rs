@@ -19,8 +19,8 @@ pub struct GitRepository {
     root: PathBuf,
 }
 
-impl GitRepository {
-    pub fn new() -> Self {
+impl Default for GitRepository {
+    fn default() -> Self {
         let dir = TempDir::new().unwrap();
         let root = dir.path().to_path_buf();
 
@@ -29,7 +29,9 @@ impl GitRepository {
 
         result
     }
+}
 
+impl GitRepository {
     pub fn path(&self) -> PathBuf {
         self.root.to_path_buf()
     }

@@ -10,7 +10,7 @@ pub use self::common::*;
 #[ignore = "does not work"]
 async fn should_have_commit_command() -> Result<(), rexpect::error::Error> {
     let _dir = home_isolation();
-    let git_repo = GitRepository::new();
+    let git_repo = GitRepository::default();
     git_repo.touch("plop.txt");
 
     let mut config = GitmojiConfig::default();

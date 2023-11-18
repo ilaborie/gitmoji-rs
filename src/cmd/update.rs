@@ -27,6 +27,7 @@ pub async fn update_gitmojis(mut config: GitmojiConfig) -> Result<GitmojiConfig>
 }
 
 #[cfg(test)]
+#[allow(clippy::ignored_unit_patterns)]
 mod tests {
     use assert2::{check, let_assert};
     use wiremock::matchers::method;

@@ -247,6 +247,7 @@ impl Display for Gitmoji {
 }
 
 #[cfg(test)]
+#[allow(clippy::ignored_unit_patterns)]
 mod tests {
     use assert2::*;
 

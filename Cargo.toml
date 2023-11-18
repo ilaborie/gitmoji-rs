@@ -21,7 +21,7 @@ hook = []
 clap = { version = "4.1", features = ["derive"] }
 clap_complete = "4.1"
 console = "0.15"
-dialoguer = { version = "0.10", features = ["fuzzy-select"] }
+dialoguer = { version = "0.11", features = ["fuzzy-select"] }
 directories = "5.0"
 fuzzy-matcher = "0.3"
 indicatif = "0.17"
@@ -30,12 +30,12 @@ serde = { version = "1", features = ["derive"] }
 thiserror = "1.0"
 time = { version = "0.3", features = ["serde-well-known"] }
 tokio = { version = "1.23", features = [
-    "process",
-    "fs",
-    "macros",
-    "rt-multi-thread",
+  "process",
+  "fs",
+  "macros",
+  "rt-multi-thread",
 ] }
-toml_edit = { version = "0.19", features = ["serde"] }
+toml_edit = { version = "0.21", features = ["serde"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
 url = { version = "2.2", features = ["serde"] }
@@ -47,8 +47,8 @@ assert_cmd = "2.0"
 assert_fs = "1.0"
 once_cell = "1"
 rexpect = "0.5"
-rstest = "0.17"
-serial_test = "1.0"
+rstest = "0.18"
+serial_test = "2.0"
 test-log = { version = "0.2", features = ["trace"], default-features = false }
 wiremock = "0.5"
 
@@ -56,3 +56,38 @@ wiremock = "0.5"
 # Optimize performance
 lto = true
 codegen-units = 1
+
+# The profile that 'cargo dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
+
+# Config for 'cargo dist'
+[workspace.metadata.dist]
+# The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.4.3"
+# CI backends to support
+ci = ["github"]
+# The installers to generate for each app
+installers = ["shell", "homebrew"]
+# A GitHub repo to push Homebrew formulas to
+tap = "ilaborie//opt/homebreilaborie/homebrew-ilaborie"
+# Target platforms to build apps for (Rust target-triple syntax)
+targets = [
+  "x86_64-unknown-linux-gnu",
+  "aarch64-apple-darwin",
+  "x86_64-apple-darwin",
+  "x86_64-pc-windows-msvc",
+]
+# Publish jobs to run in CI
+publish-jobs = ["homebrew"]
+# Publish jobs to run in CI
+pr-run-mode = "plan"
+
+allow-dirty = ["ci"]
+
+# Bininstall
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }-v{ version }{ archive-suffix }"
+bin-dir = "{ name }-{ target }-v{ version }/{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
