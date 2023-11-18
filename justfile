@@ -43,8 +43,8 @@ format:
 # Format the code
 lint:
     @echo "🎩 Linting..."
-    cargo check --all-features
-    cargo clippy --all-features
+    cargo check --all --all-features
+    cargo clippy --all --all-features
 
 # Check the code (formatting, lint, and tests)
 check:
@@ -75,5 +75,5 @@ install:
     cargo install --path .
 
 # Release
-release *ARGS:
-    cargo smart-release --update-crates-index gitmoji-rs {{ARGS}}
+# release *ARGS:
+#     cargo smart-release --update-crates-index gitmoji-rs {{ARGS}}

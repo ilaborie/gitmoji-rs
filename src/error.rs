@@ -39,6 +39,10 @@ pub enum Error {
     #[error(transparent)]
     /// TOML deserialization error
     TomlDeserializeError(#[from] toml_edit::de::Error),
+
+    /// A Dialoguer error
+    #[error(transparent)]
+    DialoguerError(#[from] dialoguer::Error),
 }
 
 /// Gitmojis result
