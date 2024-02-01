@@ -13,12 +13,43 @@ Pick up the [latest binary](./releases)
 
 Or If you have the [Rust toolchain](https://rustup.rs/) installed you can install with:
 
+## Check you have the dependencies
+
+```shell
+# macOS (Homebrew)
+$ brew install openssl@3
+
+# macOS (MacPorts)
+$ sudo port install openssl
+
+# macOS (pkgsrc)
+$ sudo pkgin install openssl
+
+# Arch Linux
+$ sudo pacman -S pkg-config openssl
+
+# Debian and Ubuntu
+$ sudo apt-get install pkg-config libssl-dev
+
+# Fedora
+$ sudo dnf install pkg-config perl-FindBin openssl-devel
+
+# Alpine Linux
+$ apk add pkgconfig openssl-dev
+
+# openSUSE
+$ sudo zypper in libopenssl-devel
+```
+
+[source](https://docs.rs/openssl/latest/openssl/#automatic)
+
+and then `cargo install`it
+
 ```shell
 cargo install gitmoji-rs
 ```
 
 ## Usage
-
 
 ### `gitmoji help`, `gitmoji --help`
 
@@ -90,16 +121,16 @@ Update the gitmojis list based on the provided api url.
 
 ```shell
 ❯ gitmoji update
-🎨	:art:	Improve structure / format of the code.
-⚡️	:zap:	Improve performance.
-🔥	:fire:	Remove code or files.
-🐛	:bug:	Fix a bug.
-🚑️	:ambulance:	Critical hotfix.
-✨	:sparkles:	Introduce new features.
-📝	:memo:	Add or update documentation.
-🚀	:rocket:	Deploy stuff.
-💄	:lipstick:	Add or update the UI and style files.
-🎉	:tada:	Begin a project.
+🎨    :art:   Improve structure / format of the code.
+⚡️    :zap:    Improve performance.
+🔥    :fire:    Remove code or files.
+🐛    :bug:    Fix a bug.
+🚑️    :ambulance:    Critical hotfix.
+✨    :sparkles:    Introduce new features.
+📝    :memo:    Add or update documentation.
+🚀    :rocket:    Deploy stuff.
+💄    :lipstick:    Add or update the UI and style files.
+🎉    :tada:    Begin a project.
 ...
 ```
 
@@ -109,27 +140,28 @@ List available gitmojis.
 
 ```shell
 ❯ gitmoji list
-🎨	:art:	Improve structure / format of the code.
-⚡️	:zap:	Improve performance.
-🔥	:fire:	Remove code or files.
-🐛	:bug:	Fix a bug.
-🚑️	:ambulance:	Critical hotfix.
-✨	:sparkles:	Introduce new features.
-📝	:memo:	Add or update documentation.
-🚀	:rocket:	Deploy stuff.
-💄	:lipstick:	Add or update the UI and style files.
-🎉	:tada:	Begin a project.
+🎨    :art:    Improve structure / format of the code.
+⚡️    :zap:    Improve performance.
+🔥    :fire:    Remove code or files.
+🐛    :bug:    Fix a bug.
+🚑️    :ambulance:    Critical hotfix.
+✨    :sparkles:    Introduce new features.
+📝    :memo:    Add or update documentation.
+🚀    :rocket:    Deploy stuff.
+💄    :lipstick:    Add or update the UI and style files.
+🎉    :tada:    Begin a project.
 ...
 ```
+
 ### `gitmoji search`
 
 Search a gitmoji
 
 ```shell
 ❯ gitmoji search bug
-🐛	:bug:	Fix a bug.
-🏗️	:building_construction:	Make architectural changes.
-👔	:necktie:	Add or update business logic
+🐛    :bug:    Fix a bug.
+🏗️    :building_construction:    Make architectural changes.
+👔    :necktie:    Add or update business logic
 ```
 
 ## Missing features
