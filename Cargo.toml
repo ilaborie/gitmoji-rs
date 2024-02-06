@@ -35,7 +35,7 @@ tokio = { version = "1.36", features = [
   "macros",
   "rt-multi-thread",
 ] }
-toml_edit = { version = "0.21", features = ["serde"] }
+toml_edit = { version = "0.22", features = ["serde"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
 url = { version = "2.5", features = ["serde"] }
