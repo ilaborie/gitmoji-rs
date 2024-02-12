@@ -50,7 +50,7 @@ rexpect = "0.5"
 rstest = "0.18"
 serial_test = "3.0"
 test-log = { version = "0.2", features = ["trace"], default-features = false }
-wiremock = "0.5"
+wiremock = "0.6"
 
 [profile.release]
 # Optimize performance
