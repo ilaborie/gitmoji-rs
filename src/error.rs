@@ -1,48 +1,45 @@
 use crate::git::GitCommandError;
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, derive_more::Error, derive_more::Display, derive_more::From)]
 /// Gitmojis errors
 #[non_exhaustive]
 pub enum Error {
-    #[error(transparent)]
     /// Cannot retrieve gitmojis
-    CannotFetchGitmojis(#[from] reqwest::Error),
+    #[display("Cannot retrieve gitmojis: {_0:?}")]
+    CannotFetchGitmojis(reqwest::Error),
 
-    #[error("Cannot get project config because {0}")]
     /// Cannot get the project config file
-    CannotGetProjectConfigFile(String),
+    #[display("Cannot get project config because {cause}")]
+    CannotGetProjectConfigFile {
+        /// The cause
+        cause: String,
+    },
 
-    #[error("Fail to commit")]
     /// Cannot commit
+    #[display("Fail to commit")]
     FailToCommit,
 
-    #[error("Missing the configuration file, to create it use `gitmoji config`")]
     /// Configuration file not found
+    #[display("Missing the configuration file, to create it use `gitmoji config`")]
     MissingConfigFile,
 
-    #[error(transparent)]
     /// I/O error
-    IoError(#[from] std::io::Error),
+    IoError(std::io::Error),
 
-    #[error(transparent)]
     /// Issue while running a git command
-    GitCommandError(#[from] GitCommandError),
+    GitCommandError(GitCommandError),
 
-    #[error(transparent)]
     /// Invalid URL
-    InvalidUrlError(#[from] url::ParseError),
+    InvalidUrlError(url::ParseError),
 
-    #[error(transparent)]
     /// TOML serialization error
-    TomlSerializeError(#[from] toml_edit::ser::Error),
+    TomlSerializeError(toml_edit::ser::Error),
 
-    #[error(transparent)]
     /// TOML deserialization error
-    TomlDeserializeError(#[from] toml_edit::de::Error),
+    TomlDeserializeError(toml_edit::de::Error),
 
     /// A Dialoguer error
-    #[error(transparent)]
-    DialoguerError(#[from] dialoguer::Error),
+    DialoguerError(dialoguer::Error),
 }
 
 /// Gitmojis result

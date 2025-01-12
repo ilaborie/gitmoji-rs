@@ -2,11 +2,13 @@ use std::process::ExitStatus;
 
 use tokio::process::Command;
 
-#[derive(Debug, thiserror::Error)]
-#[error("Fail to run `{command}` because {source}")]
+#[derive(Debug, derive_more::Error, derive_more::Display)]
+#[display("Fail to run `{command}` because {source}")]
 pub struct GitCommandError {
     /// The source error
+    #[error(source)]
     source: std::io::Error,
+
     /// The command
     command: String,
 }

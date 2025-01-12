@@ -1,7 +1,7 @@
 use std::fmt::{self, Display};
 
+use jiff::Timestamp;
 use serde::{Deserialize, Serialize};
-use time::OffsetDateTime;
 use url::Url;
 
 /// The default URL used for update
@@ -25,8 +25,7 @@ pub struct GitmojiConfig {
     signed: bool,
     scope: bool,
     update_url: Url,
-    #[serde(with = "time::serde::iso8601::option")]
-    last_update: Option<OffsetDateTime>,
+    last_update: Option<Timestamp>,
     gitmojis: Vec<Gitmoji>,
 }
 
@@ -104,7 +103,7 @@ impl GitmojiConfig {
 
     /// The last time the gitmoji list was updated
     #[must_use]
-    pub const fn last_update(&self) -> Option<OffsetDateTime> {
+    pub const fn last_update(&self) -> Option<Timestamp> {
         self.last_update
     }
 
@@ -116,7 +115,7 @@ impl GitmojiConfig {
 
     /// Set the gitmojis list
     pub fn set_gitmojis(&mut self, gitmojis: Vec<Gitmoji>) {
-        self.last_update = Some(OffsetDateTime::now_utc());
+        self.last_update = Some(Timestamp::now());
         self.gitmojis = gitmojis;
     }
 }
