@@ -6,11 +6,10 @@ use anyhow::Ok;
 use assert_fs::fixture::{FileTouch, PathChild};
 use assert_fs::TempDir;
 
-#[derive(Debug, thiserror::Error)]
+#[derive(Debug, derive_more::Error, derive_more::Display, derive_more::From)]
 pub enum GitError {
     /// A Git command error
-    #[error(transparent)]
-    IoError(#[from] std::io::Error),
+    IoError(std::io::Error),
 }
 
 pub struct GitRepository {

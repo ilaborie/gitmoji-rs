@@ -21,8 +21,7 @@ pub fn get_commit_params(config: &GitmojiConfig, term: &Term) -> Result<CommitPa
         .interact_on(term)?;
     let gitmoji = config
         .gitmojis()
-        .iter()
-        .nth(gitmoji_idx)
+        .get(gitmoji_idx)
         .expect("Should be in bounds")
         .clone();
     let scope = if config.scope() {

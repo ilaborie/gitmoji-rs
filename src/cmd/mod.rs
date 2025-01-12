@@ -8,19 +8,21 @@ use crate::git::has_staged_changes;
 use crate::{git, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG};
 
 mod commit;
+pub use self::commit::*;
+
 mod config;
+pub use self::config::*;
+
 #[cfg(feature = "hook")]
 mod hook;
-mod list;
-mod search;
-mod update;
 
-pub use self::commit::*;
-pub use self::config::*;
-#[cfg(feature = "hook")]
-pub use self::hook::*;
+mod list;
 use self::list::print_gitmojis;
+
+mod search;
 use self::search::filter;
+
+mod update;
 use self::update::update_gitmojis;
 
 async fn get_config_or_stop() -> GitmojiConfig {
@@ -28,7 +30,9 @@ async fn get_config_or_stop() -> GitmojiConfig {
         Ok(config) => config,
         Err(err) => {
             warn!("Oops, cannot read config because {err}");
-            eprintln!("⚠️  No configuration found, try run `gitmoji init` to fetch a configuration");
+            eprintln!(
+                "⚠️  No configuration found, try run `gitmoji init` to fetch a configuration"
+            );
             exit(EXIT_NO_CONFIG)
         }
     }
@@ -173,12 +177,7 @@ pub async fn apply_hook(
         ask_commit_title_description(&config, term).await?;
 
     info!("Write commit message to {dest:?} with source: {source:?}");
-    let mut file = tokio::fs::OpenOptions::new()
-        .create(true)
-        .read(true)
-        .write(true)
-        .open(dest)
-        .await?;
+    let mut file = tokio::fs::File::create(dest).await?;
 
     let mut contents = vec![];
     file.read_to_end(&mut contents).await?;

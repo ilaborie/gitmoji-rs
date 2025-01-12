@@ -86,14 +86,16 @@ fn validate_url(s: &String) -> Result<()> {
 /// Fail if we cannot create the parent directory
 pub async fn get_config_file() -> Result<PathBuf> {
     let project_dir = ProjectDirs::from(DIR_QUALIFIER, DIR_ORGANIZATION, DIR_APPLICATION)
-        .ok_or_else(|| {
-            Error::CannotGetProjectConfigFile("cannot define project dir".to_string())
+        .ok_or_else(|| Error::CannotGetProjectConfigFile {
+            cause: "cannot define project dir".to_string(),
         })?;
 
     let config_dir = project_dir.config_dir();
     fs::create_dir_all(config_dir)
         .await
-        .map_err(|err| Error::CannotGetProjectConfigFile(err.to_string()))?;
+        .map_err(|err| Error::CannotGetProjectConfigFile {
+            cause: err.to_string(),
+        })?;
 
     let mut config_file = config_dir.to_path_buf();
     config_file.push(CONFIG_FILE);
