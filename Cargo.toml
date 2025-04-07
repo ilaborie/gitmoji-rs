@@ -30,7 +30,7 @@ dialoguer = { version = "0.11", features = ["fuzzy-select"] }
 directories = "6.0"
 fuzzy-matcher = "0.3"
 indicatif = "0.17"
-jiff = { version = "0.2.5", features = ["serde"] }
+jiff = { version = "0.2.6", features = ["serde"] }
 reqwest = { version = "0.12", features = ["json", "rustls-tls-native-roots"] }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.44", features = [
