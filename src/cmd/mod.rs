@@ -1,10 +1,14 @@
 use std::process::exit;
 
 use console::Term;
+use serde::{Deserialize, Serialize};
 use tracing::{info, warn};
 use url::Url;
 
 use crate::git::has_staged_changes;
+use crate::recover::{
+    ask_for_recovery, clear_recovery_file, read_recovery_file, write_recovery_file,
+};
 use crate::{git, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG};
 
 mod commit;
@@ -50,10 +54,10 @@ async fn update_config_or_stop(config: GitmojiConfig) -> GitmojiConfig {
     }
 }
 
-#[derive(Debug, Clone)]
-struct CommitTitleDescription {
-    title: String,
-    description: Option<String>,
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CommitTitleDescription {
+    pub title: String,
+    pub description: Option<String>,
 }
 
 #[tracing::instrument(skip(term))]
@@ -92,15 +96,47 @@ pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
         return Ok(());
     }
 
-    let CommitTitleDescription { title, description } =
-        ask_commit_title_description(&config, term).await?;
+    let commit = match read_recovery_file() {
+        Ok(Some(commit)) => match ask_for_recovery(term, commit.clone()) {
+            Ok(true) => commit,
+            _ => ask_commit_title_description(&config, term).await?,
+        },
+        Ok(None) => ask_commit_title_description(&config, term).await?,
+        Err(err) => {
+            warn!("Cannot read recovery file: {err}");
+            ask_commit_title_description(&config, term).await?
+        }
+    };
 
     // Add before commit
     let all = all || config.auto_add();
 
     // Commit
-    let status = git::commit(all, amend, config.signed(), &title, description.as_deref()).await?;
-    status.success().then_some(()).ok_or(Error::FailToCommit)
+    let status = git::commit(
+        all,
+        amend,
+        config.signed(),
+        &commit.title,
+        commit.description.as_deref(),
+    )
+    .await?;
+
+    match status.success().then_some(()).ok_or(Error::FailToCommit) {
+        Ok(()) => {
+            if let Err(recovery_err) = clear_recovery_file() {
+                warn!("{recovery_err}");
+            }
+
+            Ok(())
+        }
+        Err(err) => {
+            if let Err(recovery_err) = write_recovery_file(commit) {
+                warn!("{recovery_err}");
+            }
+
+            Err(err)
+        }
+    }
 }
 
 /// Configure Gitmoji
