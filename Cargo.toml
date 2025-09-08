@@ -29,7 +29,7 @@ derive_more = { version = "2.0", default-features = false, features = [
 dialoguer = { version = "0.12", features = ["fuzzy-select"] }
 directories = "6.0"
 fuzzy-matcher = "0.3"
-indicatif = "0.17"
+indicatif = "0.18"
 jiff = { version = "0.2.15", features = ["serde"] }
 reqwest = { version = "0.12", features = ["json", "rustls-tls-native-roots"] }
 serde = { version = "1", features = ["derive"] }
