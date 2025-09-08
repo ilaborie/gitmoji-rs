@@ -26,7 +26,7 @@ derive_more = { version = "2.0", default-features = false, features = [
   "error",
   "from",
 ] }
-dialoguer = { version = "0.11", features = ["fuzzy-select"] }
+dialoguer = { version = "0.12", features = ["fuzzy-select"] }
 directories = "6.0"
 fuzzy-matcher = "0.3"
 indicatif = "0.17"
