@@ -96,3 +96,14 @@ pub(crate) async fn get_git_dir() -> Result<std::path::PathBuf> {
     let result = std::path::PathBuf::from(result);
     Ok(result)
 }
+
+pub(crate) fn get_git_dir_sync() -> Result<std::path::PathBuf> {
+    let args = ["rev-parse", "--absolute-git-dir"];
+    let output = std::process::Command::new("git")
+        .args(args)
+        .output()
+        .map_err(map_git_error(&args))?;
+
+    let result = String::from_utf8_lossy(&output.stdout).trim().to_string();
+    Ok(std::path::PathBuf::from(result))
+}

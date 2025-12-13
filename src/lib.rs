@@ -13,6 +13,7 @@ mod cli;
 mod cmd;
 mod error;
 mod git;
+mod history;
 mod model;
 mod recovery;
 
@@ -27,6 +28,7 @@ pub use self::cmd::{
     config as gitmoji_config, read_config_or_default, read_config_or_fail, write_config,
 };
 pub use self::error::*;
+pub use self::history::ScopeHistory;
 pub use self::model::*;
 
 /// Exit code when a configuration is require but not found

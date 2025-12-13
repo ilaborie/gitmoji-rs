@@ -2,7 +2,7 @@ use console::Term;
 use dialoguer::theme::ColorfulTheme;
 use dialoguer::{FuzzySelect, Input};
 
-use crate::{Gitmoji, GitmojiConfig, Result};
+use crate::{Gitmoji, GitmojiConfig, Result, ScopeHistory};
 
 pub struct CommitParams {
     pub gitmoji: Gitmoji,
@@ -25,10 +25,11 @@ pub fn get_commit_params(config: &GitmojiConfig, term: &Term) -> Result<CommitPa
         .expect("Should be in bounds")
         .clone();
     let scope = if config.scope() {
-        // TODO: [#2] add an history
-        let scope = Input::with_theme(&theme)
+        let mut history = ScopeHistory::load().unwrap_or_default();
+        let scope: String = Input::with_theme(&theme)
             .with_prompt("Enter the scope of current changes:")
             .default("*".to_string())
+            .history_with(&mut history)
             .interact_text_on(term)?;
         Some(scope)
     } else {

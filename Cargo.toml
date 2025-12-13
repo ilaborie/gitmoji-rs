@@ -56,7 +56,7 @@ derive_more = { version = "2.1", default-features = false, features = [
   "error",
   "from",
 ] }
-dialoguer = { version = "0.12", features = ["fuzzy-select"] }
+dialoguer = { version = "0.12", features = ["fuzzy-select", "history"] }
 directories = "6.0"
 fuzzy-matcher = "0.3"
 reqwest = { version = "0.12", features = ["json", "rustls-tls-native-roots"] }
