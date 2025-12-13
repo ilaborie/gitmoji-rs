@@ -1,11 +1,14 @@
 use std::process::exit;
 
 use console::Term;
+use serde::{Deserialize, Serialize};
 use tracing::{info, warn};
 use url::Url;
 
 use crate::git::has_staged_changes;
-use crate::{git, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG};
+use crate::{
+    git, recovery, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG,
+};
 
 mod commit;
 pub use self::commit::*;
@@ -50,10 +53,10 @@ async fn update_config_or_stop(config: GitmojiConfig) -> GitmojiConfig {
     }
 }
 
-#[derive(Debug, Clone)]
-struct CommitTitleDescription {
-    title: String,
-    description: Option<String>,
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CommitTitleDescription {
+    pub title: String,
+    pub description: Option<String>,
 }
 
 #[tracing::instrument(skip(term))]
@@ -92,18 +95,46 @@ pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
         return Ok(());
     }
 
-    let CommitTitleDescription { title, description } =
-        ask_commit_title_description(&config, term).await?;
+    let commit = if let Ok(Some(recovered)) = recovery::read() {
+        if recovery::ask(term, &recovered).unwrap_or(false) {
+            recovered
+        } else {
+            ask_commit_title_description(&config, term).await?
+        }
+    } else {
+        ask_commit_title_description(&config, term).await?
+    };
 
     // Add before commit
     let all = all || config.auto_add();
 
     // Commit
-    let status = git::commit(all, amend, config.signed(), &title, description.as_deref()).await?;
-    status.success().then_some(()).ok_or(Error::FailToCommit)
+    let status = git::commit(
+        all,
+        amend,
+        config.signed(),
+        &commit.title,
+        commit.description.as_deref(),
+    )
+    .await?;
+
+    if status.success() {
+        if let Err(err) = recovery::clear() {
+            warn!("{err}");
+        }
+        Ok(())
+    } else {
+        if let Err(err) = recovery::write(&commit) {
+            warn!("{err}");
+        }
+        Err(Error::FailToCommit)
+    }
 }
 
 /// Configure Gitmoji
+///
+/// # Errors
+/// Returns an error if configuration creation fails or dialog interaction fails
 #[tracing::instrument(skip(term))]
 pub async fn config(default: bool, term: &Term) -> Result<()> {
     let config = if default {
