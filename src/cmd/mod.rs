@@ -132,6 +132,9 @@ pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
 }
 
 /// Configure Gitmoji
+///
+/// # Errors
+/// Returns an error if configuration creation fails or dialog interaction fails
 #[tracing::instrument(skip(term))]
 pub async fn config(default: bool, term: &Term) -> Result<()> {
     let config = if default {
