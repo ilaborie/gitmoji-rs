@@ -1,3 +1,5 @@
+#![allow(clippy::missing_panics_doc)]
+
 use std::path::PathBuf;
 use std::process::Command;
 use std::str::FromStr;
@@ -13,7 +15,7 @@ pub struct GitRepository {
 
 impl Default for GitRepository {
     fn default() -> Self {
-        let dir = TempDir::new().unwrap();
+        let dir = TempDir::new().expect("Create temp dir");
         let root = dir.path().to_path_buf();
 
         let result = Self { dir, root };
@@ -24,22 +26,23 @@ impl Default for GitRepository {
 }
 
 impl GitRepository {
+    #[must_use]
     pub fn path(&self) -> PathBuf {
-        self.root.to_path_buf()
+        self.root.clone()
     }
+
     fn init(&self) {
         let status = Command::new("git")
             .current_dir(&self.root)
             .args(["init"])
             .status()
-            .unwrap();
+            .expect("Run git init");
 
-        if !status.success() {
-            panic!(
-                "Fail to create a git repository in {:?}, status: {status:?}",
-                self.root
-            )
-        }
+        assert!(
+            status.success(),
+            "Fail to create a git repository in {}, status: {status:?}",
+            self.root.display()
+        );
     }
 
     pub fn touch(&self, file: &str) {
@@ -52,13 +55,15 @@ impl GitRepository {
             .current_dir(&self.root)
             .args(["add", file])
             .status()
-            .unwrap();
+            .expect("Run git add");
 
-        if !status.success() {
-            panic!("Fail to add {file} to index, status: {status:?}")
-        }
+        assert!(
+            status.success(),
+            "Fail to add {file} to index, status: {status:?}"
+        );
     }
 
+    #[must_use]
     pub fn list_commits(&self, commit_ref: Option<String>) -> Vec<GitCommit> {
         let mut cmd = Command::new("git");
         cmd.current_dir(&self.root);
@@ -73,15 +78,16 @@ impl GitRepository {
             cmd.arg(format!("{commit_ref}.."));
         }
 
-        let output = cmd.output().unwrap();
+        let output = cmd.output().expect("Run git log");
         let status = output.status;
-        if !status.success() {
-            panic!("Fail to list commits, status: {status:?} with {output:?}");
-        }
+        assert!(
+            status.success(),
+            "Fail to list commits, status: {status:?} with {output:?}"
+        );
 
         let mut result = vec![];
         for line in String::from_utf8_lossy(&output.stdout).lines() {
-            let commit = line.parse().unwrap();
+            let commit = line.parse().expect("Parse commit");
             result.push(commit);
         }
 
@@ -96,10 +102,12 @@ pub struct GitCommit {
 }
 
 impl GitCommit {
+    #[must_use]
     pub fn id(&self) -> &str {
         self.id.as_ref()
     }
 
+    #[must_use]
     pub fn message(&self) -> &str {
         self.message.as_ref()
     }
