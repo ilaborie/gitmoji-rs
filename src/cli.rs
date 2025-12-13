@@ -20,12 +20,6 @@ impl Settings {
     pub const fn verbose(&self) -> bool {
         self.verbose
     }
-
-    /// Get the command
-    #[must_use]
-    pub const fn command(&self) -> &Command {
-        &self.command
-    }
 }
 
 #[derive(Debug, Clone, Subcommand)]

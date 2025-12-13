@@ -1,4 +1,3 @@
-use gitmoji_rs::{write_config, Gitmoji, GitmojiConfig};
 use rexpect::session::spawn_command;
 use serial_test::serial;
 
@@ -13,17 +12,10 @@ async fn should_have_commit_command() -> Result<(), rexpect::error::Error> {
     let git_repo = GitRepository::default();
     git_repo.touch("plop.txt");
 
-    let mut config = GitmojiConfig::default();
-    config.set_gitmojis(vec![Gitmoji::new(
-        String::from("🧪"),
-        String::from(":test_tube:"),
-        Some(String::from("A Name")),
-        Some(String::from("A description")),
-    )]);
-    write_config(&config).await.unwrap();
+    setup_test_config().await;
 
     let mut cmd = cargo_bin_command("gitmoji");
-    cmd.current_dir(dbg!(git_repo.path()));
+    cmd.current_dir(git_repo.path());
     cmd.arg("commit");
 
     let mut p = spawn_command(cmd, Some(10_000))?;
@@ -33,8 +25,7 @@ async fn should_have_commit_command() -> Result<(), rexpect::error::Error> {
 
     p.exp_eof()?;
 
-    let list = git_repo.list_commits(None);
-    dbg!(&list);
+    let _list = git_repo.list_commits(None);
 
     Ok(())
 }

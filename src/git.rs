@@ -15,6 +15,13 @@ pub struct GitCommandError {
 
 type Result<T> = std::result::Result<T, GitCommandError>;
 
+fn map_git_error<'a>(args: &'a [&'a str]) -> impl FnOnce(std::io::Error) -> GitCommandError + 'a {
+    |source| GitCommandError {
+        source,
+        command: format!("git {}", args.join(" ")),
+    }
+}
+
 pub(crate) async fn commit(
     all: bool,
     amend: bool,
@@ -42,10 +49,7 @@ pub(crate) async fn commit(
         .args(&args)
         .status()
         .await
-        .map_err(|source| GitCommandError {
-            source,
-            command: format!("git {}", args.join(" ")),
-        })?;
+        .map_err(map_git_error(&args))?;
 
     Ok(status)
 }
@@ -56,10 +60,7 @@ pub(crate) async fn get_config_value(config_key: &str) -> Result<String> {
         .args(args)
         .output()
         .await
-        .map_err(|source| GitCommandError {
-            source,
-            command: format!("git {}", args.join(" ")),
-        })?;
+        .map_err(map_git_error(&args))?;
 
     let result = String::from_utf8_lossy(&output.stdout).trim().to_string();
     Ok(result)
@@ -71,10 +72,7 @@ pub(crate) async fn has_staged_changes() -> Result<bool> {
         .args(args)
         .output()
         .await
-        .map_err(|source| GitCommandError {
-            source,
-            command: format!("git {}", args.join(" ")),
-        })?;
+        .map_err(map_git_error(&args))?;
 
     for line in String::from_utf8_lossy(&output.stdout).lines() {
         let first_char = line.chars().next().unwrap_or_default();
@@ -92,10 +90,7 @@ pub(crate) async fn get_git_dir() -> Result<std::path::PathBuf> {
         .args(args)
         .output()
         .await
-        .map_err(|source| GitCommandError {
-            source,
-            command: format!("git {}", args.join(" ")),
-        })?;
+        .map_err(map_git_error(&args))?;
 
     let result = String::from_utf8_lossy(&output.stdout).trim().to_string();
     let result = std::path::PathBuf::from(result);

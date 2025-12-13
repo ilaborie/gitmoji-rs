@@ -641,7 +641,6 @@ dependencies = [
  "fuzzy-matcher",
  "indicatif",
  "jiff",
- "once_cell",
  "reqwest",
  "rexpect",
  "rstest",

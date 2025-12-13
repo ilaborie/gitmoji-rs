@@ -2,11 +2,33 @@ use std::env;
 use std::path::PathBuf;
 use std::process::Command;
 
+use gitmoji_rs::{write_config, Gitmoji, GitmojiConfig};
+
 mod git;
 mod isolation;
 
 pub use self::git::*;
 pub use self::isolation::*;
+
+/// Create a test gitmoji for testing purposes
+pub fn test_gitmoji() -> Gitmoji {
+    Gitmoji::new(
+        String::from("🧪"),
+        String::from(":test_tube:"),
+        Some(String::from("Test")),
+        Some(String::from("A test gitmoji")),
+    )
+}
+
+/// Setup a test config with a single test gitmoji
+pub async fn setup_test_config() -> GitmojiConfig {
+    let mut config = GitmojiConfig::default();
+    config.set_gitmojis(vec![test_gitmoji()]);
+    write_config(&config)
+        .await
+        .expect("Failed to write test config");
+    config
+}
 
 // Adapted from assert_cmd
 pub fn cargo_bin_command(name: &str) -> Command {

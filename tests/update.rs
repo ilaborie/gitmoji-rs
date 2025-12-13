@@ -18,9 +18,9 @@ async fn should_have_update_command() {
         EmojiFormat::UseCode,
         false,
         false,
-        url.parse().unwrap(),
+        url.parse().expect("Valid mock URL"),
     );
-    write_config(&config).await.unwrap();
+    write_config(&config).await.expect("Write test config");
 
     Mock::given(method("GET"))
         .and(path("/gitmoji"))
@@ -44,8 +44,6 @@ async fn should_have_update_command() {
 
     let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("update");
-
-    let _ = dbg!(cmd.ok());
     cmd.assert().success();
 }
 
@@ -61,9 +59,9 @@ async fn should_have_update_command_fail_bad_config() {
         EmojiFormat::UseCode,
         false,
         false,
-        url.parse().unwrap(),
+        url.parse().expect("Valid mock URL"),
     );
-    write_config(&config).await.unwrap();
+    write_config(&config).await.expect("Write test config");
 
     Mock::given(method("GET"))
         .and(path("/gitmoji"))
@@ -73,8 +71,6 @@ async fn should_have_update_command_fail_bad_config() {
 
     let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("update");
-
-    let _ = dbg!(cmd.ok());
     cmd.assert().code(EXIT_CANNOT_UPDATE);
 }
 
@@ -86,7 +82,5 @@ async fn should_have_update_command_without_config() {
 
     let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("update");
-
-    let _ = dbg!(cmd.ok());
     cmd.assert().success();
 }

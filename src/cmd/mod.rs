@@ -200,7 +200,7 @@ pub async fn apply_hook(
     source: Option<String>,
     term: &Term,
 ) -> Result<()> {
-    use tokio::io::{AsyncReadExt, AsyncSeekExt, AsyncWriteExt};
+    use tokio::io::AsyncWriteExt;
 
     let config = get_config_or_stop().await;
 
@@ -208,11 +208,8 @@ pub async fn apply_hook(
         ask_commit_title_description(&config, term).await?;
 
     info!("Write commit message to {dest:?} with source: {source:?}");
-    let mut file = tokio::fs::File::create(dest).await?;
-
-    let mut contents = vec![];
-    file.read_to_end(&mut contents).await?;
-    file.seek(std::io::SeekFrom::Start(0)).await?;
+    let contents = tokio::fs::read(&dest).await.unwrap_or_default();
+    let mut file = tokio::fs::File::create(&dest).await?;
 
     file.write_all(title.as_bytes()).await?;
     file.write_all(b"\n\n").await?;

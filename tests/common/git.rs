@@ -6,14 +6,7 @@ use anyhow::Ok;
 use assert_fs::fixture::{FileTouch, PathChild};
 use assert_fs::TempDir;
 
-#[derive(Debug, derive_more::Error, derive_more::Display, derive_more::From)]
-pub enum GitError {
-    /// A Git command error
-    IoError(std::io::Error),
-}
-
 pub struct GitRepository {
-    #[allow(dead_code)]
     dir: TempDir,
     root: PathBuf,
 }

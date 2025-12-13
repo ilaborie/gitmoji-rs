@@ -136,7 +136,10 @@ async fn read_local_config() -> Result<LocalGitmojiConfig> {
 /// # Errors
 /// Fail when the config file is not found
 pub async fn read_config_or_fail() -> Result<GitmojiConfig> {
-    read_config().await.map_err(|_| Error::MissingConfigFile)
+    read_config().await.map_err(|err| {
+        warn!("Failed to read config: {err}");
+        Error::MissingConfigFile
+    })
 }
 
 /// Read the user config file, if the file does not exists, return the default configuration
