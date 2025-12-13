@@ -1,4 +1,3 @@
-use assert_cmd::Command;
 use gitmoji_rs::{write_config, EmojiFormat, GitmojiConfig, EXIT_CANNOT_UPDATE};
 use serial_test::serial;
 use wiremock::matchers::{method, path};
@@ -43,7 +42,7 @@ async fn should_have_update_command() {
         .mount(&mock_server)
         .await;
 
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("update");
 
     let _ = dbg!(cmd.ok());
@@ -72,7 +71,7 @@ async fn should_have_update_command_fail_bad_config() {
         .mount(&mock_server)
         .await;
 
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("update");
 
     let _ = dbg!(cmd.ok());
@@ -85,7 +84,7 @@ async fn should_have_update_command_fail_bad_config() {
 async fn should_have_update_command_without_config() {
     let _dir = home_isolation();
 
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("update");
 
     let _ = dbg!(cmd.ok());

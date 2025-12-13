@@ -10,11 +10,18 @@ pub use self::isolation::*;
 
 // Adapted from assert_cmd
 pub fn cargo_bin_command(name: &str) -> Command {
+    Command::new(cargo_bin_path(name))
+}
+
+pub fn assert_cargo_bin(name: &str) -> assert_cmd::Command {
+    assert_cmd::Command::new(cargo_bin_path(name))
+}
+
+fn cargo_bin_path(name: &str) -> PathBuf {
     let env_var = format!("CARGO_BIN_EXE_{name}");
-    let path = env::var_os(env_var)
+    env::var_os(env_var)
         .map(|p| p.into())
-        .unwrap_or_else(|| target_dir().join(format!("{name}{}", env::consts::EXE_SUFFIX)));
-    Command::new(path)
+        .unwrap_or_else(|| target_dir().join(format!("{name}{}", env::consts::EXE_SUFFIX)))
 }
 
 // From assert_cmd

@@ -1,5 +1,4 @@
 use assert2::check;
-use assert_cmd::Command;
 use gitmoji_rs::{read_config_or_fail, EmojiFormat, GitmojiConfig, DEFAULT_URL};
 use rexpect::session::spawn_command;
 use serial_test::serial;
@@ -57,7 +56,7 @@ async fn should_have_init_command_default_values() -> Result<(), rexpect::error:
 #[ignore = "depends on working directory"]
 async fn should_have_init_command_default_flag() -> anyhow::Result<()> {
     let _dir = home_isolation();
-    let mut cmd = Command::cargo_bin("gitmoji")?;
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("init");
     cmd.arg("--default");
 

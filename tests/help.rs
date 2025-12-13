@@ -1,4 +1,3 @@
-use assert_cmd::Command;
 use rstest::rstest;
 
 mod common;
@@ -6,7 +5,7 @@ pub use self::common::*;
 
 #[test_log::test]
 fn should_have_help_command() {
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("help");
 
     cmd.assert().success();
@@ -14,7 +13,7 @@ fn should_have_help_command() {
 
 #[test_log::test]
 fn should_have_help_flag_short() {
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("-h");
 
     cmd.assert().success();
@@ -22,7 +21,7 @@ fn should_have_help_flag_short() {
 
 #[test_log::test]
 fn should_have_help_flag_long() {
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.arg("--help");
 
     cmd.assert().success();
@@ -37,7 +36,7 @@ fn should_have_help_flag_long() {
 #[case::list("list")]
 #[test_log::test]
 fn should_have_help_for_subcommand_command(#[case] subcommand: &str) {
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.args(["help", subcommand]);
 
     cmd.assert().success();
@@ -51,7 +50,7 @@ fn should_have_help_for_subcommand_command(#[case] subcommand: &str) {
 #[case::list("list")]
 #[test_log::test]
 fn should_have_help_for_subcommand_command_with_short_flag(#[case] subcommand: &str) {
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.args([subcommand, "-h"]);
 
     cmd.assert().success();
@@ -65,7 +64,7 @@ fn should_have_help_for_subcommand_command_with_short_flag(#[case] subcommand: &
 #[case::list("list")]
 #[test_log::test]
 fn should_have_help_for_subcommand_command_with_long_flag(#[case] subcommand: &str) {
-    let mut cmd = Command::cargo_bin("gitmoji").unwrap();
+    let mut cmd = assert_cargo_bin("gitmoji");
     cmd.args([subcommand, "--help"]);
 
     cmd.assert().success();
