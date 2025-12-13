@@ -192,20 +192,37 @@ pub async fn remove_hook() -> Result<()> {
     hook::remove().await
 }
 
+/// Open /dev/tty directly for interactive prompts in hook context
+#[cfg(all(feature = "hook", unix))]
+fn open_tty_term() -> std::io::Result<Term> {
+    use std::fs::OpenOptions;
+
+    let tty_read = OpenOptions::new().read(true).open("/dev/tty")?;
+    let tty_write = OpenOptions::new().write(true).open("/dev/tty")?;
+
+    Ok(Term::read_write_pair(tty_read, tty_write))
+}
+
 /// Apply hook
 #[cfg(feature = "hook")]
-#[tracing::instrument(skip(term))]
+#[tracing::instrument(skip(_term))]
 pub async fn apply_hook(
     dest: std::path::PathBuf,
     source: Option<String>,
-    term: &Term,
+    _term: &Term,
 ) -> Result<()> {
     use tokio::io::AsyncWriteExt;
+
+    // Open /dev/tty directly for the hook context
+    // This is needed because git hooks don't have a proper terminal attached
+    let term = open_tty_term().map_err(|e| Error::Hook {
+        cause: format!("Cannot open /dev/tty: {e}"),
+    })?;
 
     let config = get_config_or_stop().await;
 
     let CommitTitleDescription { title, description } =
-        ask_commit_title_description(&config, term).await?;
+        ask_commit_title_description(&config, &term).await?;
 
     info!("Write commit message to {dest:?} with source: {source:?}");
     let contents = tokio::fs::read(&dest).await.unwrap_or_default();

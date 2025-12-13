@@ -40,6 +40,14 @@ pub enum Error {
 
     /// A Dialoguer error
     DialoguerError(dialoguer::Error),
+
+    /// Hook error
+    #[display("Hook error: {cause}")]
+    #[from(ignore)]
+    Hook {
+        /// The cause
+        cause: String,
+    },
 }
 
 /// Gitmojis result
