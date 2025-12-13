@@ -14,7 +14,7 @@ mod cmd;
 mod error;
 mod git;
 mod model;
-mod recover;
+mod recovery;
 
 use std::io::stdout;
 

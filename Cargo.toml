@@ -10,6 +10,36 @@ license = "MIT"
 authors = ["Igor Laborie <ilaborie@gmail.com>"]
 rust-version = "1.81.0"
 
+# Bininstall
+[package.metadata.binstall]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }-v{ version }{ archive-suffix }"
+bin-dir = "{ name }-{ target }-v{ version }/{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+# Config for 'cargo dist'
+[workspace.metadata.dist]
+# The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.4.3"
+# CI backends to support
+ci = ["github"]
+# The installers to generate for each app
+installers = ["shell", "homebrew"]
+# A GitHub repo to push Homebrew formulas to
+tap = "ilaborie//opt/homebreilaborie/homebrew-ilaborie"
+# Target platforms to build apps for (Rust target-triple syntax)
+targets = [
+    "x86_64-unknown-linux-gnu",
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin",
+    "x86_64-pc-windows-msvc",
+]
+# Publish jobs to run in CI
+publish-jobs = ["homebrew"]
+# Publish jobs to run in CI
+pr-run-mode = "plan"
+
+allow-dirty = ["ci"]
+
 [[bin]]
 name = "gitmoji"
 path = "src/main.rs"
@@ -33,7 +63,6 @@ indicatif = "0.17"
 jiff = { version = "0.2.15", features = ["serde"] }
 reqwest = { version = "0.12", features = ["json", "rustls-tls-native-roots"] }
 serde = { version = "1", features = ["derive"] }
-serde_json = "1.0.140"
 tokio = { version = "1.45", features = [
   "process",
   "fs",
@@ -66,33 +95,3 @@ codegen-units = 1
 [profile.dist]
 inherits = "release"
 lto = "thin"
-
-# Config for 'cargo dist'
-[workspace.metadata.dist]
-# The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
-cargo-dist-version = "0.4.3"
-# CI backends to support
-ci = ["github"]
-# The installers to generate for each app
-installers = ["shell", "homebrew"]
-# A GitHub repo to push Homebrew formulas to
-tap = "ilaborie//opt/homebreilaborie/homebrew-ilaborie"
-# Target platforms to build apps for (Rust target-triple syntax)
-targets = [
-  "x86_64-unknown-linux-gnu",
-  "aarch64-apple-darwin",
-  "x86_64-apple-darwin",
-  "x86_64-pc-windows-msvc",
-]
-# Publish jobs to run in CI
-publish-jobs = ["homebrew"]
-# Publish jobs to run in CI
-pr-run-mode = "plan"
-
-allow-dirty = ["ci"]
-
-# Bininstall
-[package.metadata.binstall]
-pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }-v{ version }{ archive-suffix }"
-bin-dir = "{ name }-{ target }-v{ version }/{ bin }{ binary-ext }"
-pkg-fmt = "tgz"

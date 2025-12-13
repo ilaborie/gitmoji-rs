@@ -6,10 +6,9 @@ use tracing::{info, warn};
 use url::Url;
 
 use crate::git::has_staged_changes;
-use crate::recover::{
-    ask_for_recovery, clear_recovery_file, read_recovery_file, write_recovery_file,
+use crate::{
+    git, recovery, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG,
 };
-use crate::{git, EmojiFormat, Error, GitmojiConfig, Result, EXIT_CANNOT_UPDATE, EXIT_NO_CONFIG};
 
 mod commit;
 pub use self::commit::*;
@@ -96,16 +95,14 @@ pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
         return Ok(());
     }
 
-    let commit = match read_recovery_file() {
-        Ok(Some(commit)) => match ask_for_recovery(term, commit.clone()) {
-            Ok(true) => commit,
-            _ => ask_commit_title_description(&config, term).await?,
-        },
-        Ok(None) => ask_commit_title_description(&config, term).await?,
-        Err(err) => {
-            warn!("Cannot read recovery file: {err}");
+    let commit = if let Ok(Some(recovered)) = recovery::read() {
+        if recovery::ask(term, &recovered).unwrap_or(false) {
+            recovered
+        } else {
             ask_commit_title_description(&config, term).await?
         }
+    } else {
+        ask_commit_title_description(&config, term).await?
     };
 
     // Add before commit
@@ -121,21 +118,16 @@ pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
     )
     .await?;
 
-    match status.success().then_some(()).ok_or(Error::FailToCommit) {
-        Ok(()) => {
-            if let Err(recovery_err) = clear_recovery_file() {
-                warn!("{recovery_err}");
-            }
-
-            Ok(())
+    if status.success() {
+        if let Err(err) = recovery::clear() {
+            warn!("{err}");
         }
-        Err(err) => {
-            if let Err(recovery_err) = write_recovery_file(commit) {
-                warn!("{recovery_err}");
-            }
-
-            Err(err)
+        Ok(())
+    } else {
+        if let Err(err) = recovery::write(&commit) {
+            warn!("{err}");
         }
+        Err(Error::FailToCommit)
     }
 }
 
