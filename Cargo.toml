@@ -2,9 +2,10 @@
 name = "gitmoji-rs"
 description = "A [gitmoji](https://gitmoji.dev/) interactive client for using gitmojis on commit messages."
 repository = "https://github.com/ilaborie/gitmoji-rs"
+homepage = "https://github.com/ilaborie/gitmoji-rs"
 keywords = ["cli", "git", "emoji", "gitmoji"]
 categories = ["command-line-utilities"]
-version = "2.0.3"
+version = "3.0.0"
 edition = "2021"
 license = "MIT"
 authors = ["Igor Laborie <ilaborie@gmail.com>"]
@@ -16,29 +17,26 @@ pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ target }-v{ versio
 bin-dir = "{ name }-{ target }-v{ version }/{ bin }{ binary-ext }"
 pkg-fmt = "tgz"
 
-# Config for 'cargo dist'
+# Config for 'dist'
 [workspace.metadata.dist]
-# The preferred cargo-dist version to use in CI (Cargo.toml SemVer syntax)
-cargo-dist-version = "0.4.3"
+# The preferred dist version to use in CI (Cargo.toml SemVer syntax)
+cargo-dist-version = "0.30.2"
 # CI backends to support
-ci = ["github"]
+ci = "github"
 # The installers to generate for each app
 installers = ["shell", "homebrew"]
 # A GitHub repo to push Homebrew formulas to
-tap = "ilaborie//opt/homebreilaborie/homebrew-ilaborie"
+tap = "ilaborie/homebrew-ilaborie"
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = [
-    "x86_64-unknown-linux-gnu",
-    "aarch64-apple-darwin",
-    "x86_64-apple-darwin",
-    "x86_64-pc-windows-msvc",
-]
+targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
 # Publish jobs to run in CI
 publish-jobs = ["homebrew"]
-# Publish jobs to run in CI
+# Which actions to run on pull requests
 pr-run-mode = "plan"
-
-allow-dirty = ["ci"]
+# Path that installers should place binaries in
+install-path = "CARGO_HOME"
+# Whether to install an updater program
+install-updater = false
 
 [[bin]]
 name = "gitmoji"
