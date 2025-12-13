@@ -47,17 +47,6 @@ path = "src/main.rs"
 [features]
 hook = []
 
-[lints.rust]
-unsafe_code = "forbid"
-
-[lints.clippy]
-pedantic = { level = "warn", priority = -1 }
-perf = { level = "warn", priority = -1 }
-# Allowed pedantic lints
-missing_errors_doc = "allow"
-missing_panics_doc = "allow"
-module_name_repetitions = "allow"
-
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }
 clap_complete = "4.5"
@@ -70,8 +59,6 @@ derive_more = { version = "2.1", default-features = false, features = [
 dialoguer = { version = "0.12", features = ["fuzzy-select"] }
 directories = "6.0"
 fuzzy-matcher = "0.3"
-indicatif = "0.18"
-jiff = { version = "0.2.16", features = ["serde"] }
 reqwest = { version = "0.12", features = ["json", "rustls-tls-native-roots"] }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.48", features = [
@@ -95,6 +82,17 @@ rstest = "0.26"
 serial_test = "3.2"
 test-log = { version = "0.2", features = ["trace"], default-features = false }
 wiremock = "0.6"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+perf = { level = "warn", priority = -1 }
+# Allowed pedantic lints
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+module_name_repetitions = "allow"
 
 [profile.release]
 # Optimize performance

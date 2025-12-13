@@ -76,7 +76,7 @@ pub fn create_config(term: &Term) -> Result<GitmojiConfig> {
 
 #[allow(clippy::ptr_arg)]
 fn validate_url(s: &String) -> Result<()> {
-    let _url = s.parse::<url::Url>()?;
+    s.parse::<url::Url>()?;
     Ok(())
 }
 

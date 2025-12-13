@@ -1,6 +1,5 @@
 use std::fmt::{self, Display};
 
-use jiff::Timestamp;
 use serde::{Deserialize, Serialize};
 use url::Url;
 
@@ -25,7 +24,6 @@ pub struct GitmojiConfig {
     signed: bool,
     scope: bool,
     update_url: Url,
-    last_update: Option<Timestamp>,
     gitmojis: Vec<Gitmoji>,
 }
 
@@ -45,7 +43,6 @@ impl GitmojiConfig {
             signed,
             scope,
             update_url,
-            last_update: None,
             gitmojis: vec![],
         }
     }
@@ -101,12 +98,6 @@ impl GitmojiConfig {
         self.update_url = update_url;
     }
 
-    /// The last time the gitmoji list was updated
-    #[must_use]
-    pub const fn last_update(&self) -> Option<Timestamp> {
-        self.last_update
-    }
-
     /// The gitmoji list
     #[must_use]
     pub fn gitmojis(&self) -> &[Gitmoji] {
@@ -115,7 +106,6 @@ impl GitmojiConfig {
 
     /// Set the gitmojis list
     pub fn set_gitmojis(&mut self, gitmojis: Vec<Gitmoji>) {
-        self.last_update = Some(Timestamp::now());
         self.gitmojis = gitmojis;
     }
 }
@@ -128,7 +118,6 @@ impl Default for GitmojiConfig {
             signed: false,
             scope: false,
             update_url: DEFAULT_URL.parse().expect("It's a valid URL"),
-            last_update: None,
             gitmojis: vec![],
         }
     }
