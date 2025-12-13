@@ -44,7 +44,11 @@ pub const EXIT_CANNOT_UPDATE: i32 = 20;
 pub async fn run(settings: Settings, term: &Term) -> Result<()> {
     match settings.command {
         Command::Init { default } => gitmoji_config(default, term).await,
-        Command::Commit { all, amend } => cmd::commit(all, amend, term).await,
+        Command::Commit {
+            all,
+            amend,
+            extra_args,
+        } => cmd::commit(all, amend, &extra_args, term).await,
         Command::Update { url } => cmd::update_config(url).await,
         Command::List => cmd::list().await,
         Command::Search { text } => cmd::search(&text).await,

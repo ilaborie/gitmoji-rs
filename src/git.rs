@@ -28,6 +28,7 @@ pub(crate) async fn commit(
     signed: bool,
     commit_title: &str,
     description: Option<&str>,
+    extra_args: &[String],
 ) -> Result<ExitStatus> {
     let mut args = vec!["commit"];
     if all {
@@ -44,6 +45,9 @@ pub(crate) async fn commit(
     if let Some(description) = description {
         args.push("-m");
         args.push(description);
+    }
+    for arg in extra_args {
+        args.push(arg);
     }
     let status = Command::new("git")
         .args(&args)

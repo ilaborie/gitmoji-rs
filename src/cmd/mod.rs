@@ -87,7 +87,7 @@ async fn ask_commit_title_description(
 
 /// Commit using Gitmoji
 #[tracing::instrument(skip(term))]
-pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
+pub async fn commit(all: bool, amend: bool, extra_args: &[String], term: &Term) -> Result<()> {
     let config = get_config_or_stop().await;
 
     if !amend && !has_staged_changes().await? {
@@ -115,6 +115,7 @@ pub async fn commit(all: bool, amend: bool, term: &Term) -> Result<()> {
         config.signed(),
         &commit.title,
         commit.description.as_deref(),
+        extra_args,
     )
     .await?;
 

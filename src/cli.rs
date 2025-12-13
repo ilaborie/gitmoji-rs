@@ -42,6 +42,10 @@ pub enum Command {
         #[clap(long)]
         /// Add the `--amend` flag for git commit command
         amend: bool,
+
+        #[clap(last = true)]
+        /// Extra arguments to pass to `git commit`
+        extra_args: Vec<String>,
     },
 
     /// Sync emoji list with the repository
