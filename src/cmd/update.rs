@@ -29,7 +29,7 @@ pub async fn update_gitmojis(mut config: GitmojiConfig) -> Result<GitmojiConfig>
 #[cfg(test)]
 #[allow(clippy::ignored_unit_patterns)]
 mod tests {
-    use assert2::check;
+    use assert2::{assert, check};
     use wiremock::matchers::method;
     use wiremock::{Mock, MockServer, ResponseTemplate};
 
@@ -77,7 +77,7 @@ mod tests {
 
         let result = get_gitmojis(&mock_server.uri()).await;
 
-        assert2::assert!(let Err(_) = result);
+        assert!(let Err(_) = result);
     }
 
     #[test_log::test(tokio::test)]
@@ -90,6 +90,6 @@ mod tests {
 
         let result = get_gitmojis(&mock_server.uri()).await;
 
-        assert2::assert!(let Err(_) = result);
+        assert!(let Err(_) = result);
     }
 }

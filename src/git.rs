@@ -72,36 +72,34 @@ pub(crate) async fn commit(
 
 #[cfg(test)]
 mod tests {
+    use assert2::check;
+
     use super::*;
 
     #[test]
     fn should_build_basic_args() {
         let args = build_commit_args(false, false, false, "feat: add thing", None, &[]);
-        assert_eq!(args, vec!["commit", "-m", "feat: add thing"]);
+        check!(args == vec!["commit", "-m", "feat: add thing"]);
     }
 
     #[test]
     fn should_build_args_with_description() {
         let args = build_commit_args(false, false, false, "feat: add thing", Some("body"), &[]);
-        assert_eq!(args, vec!["commit", "-m", "feat: add thing", "-m", "body"]);
+        check!(args == vec!["commit", "-m", "feat: add thing", "-m", "body"]);
     }
 
     #[test]
     fn should_build_args_with_flags() {
         let args = build_commit_args(true, true, true, "feat: add thing", None, &[]);
-        assert_eq!(
-            args,
-            vec!["commit", "--all", "--amend", "-S", "-m", "feat: add thing"]
-        );
+        check!(args == vec!["commit", "--all", "--amend", "-S", "-m", "feat: add thing"]);
     }
 
     #[test]
     fn should_append_extra_args_at_tail() {
         let extra = vec!["--no-verify".to_string(), "--signoff".to_string()];
         let args = build_commit_args(false, false, false, "feat: add thing", None, &extra);
-        assert_eq!(
-            args,
-            vec![
+        check!(
+            args == vec![
                 "commit",
                 "-m",
                 "feat: add thing",
@@ -115,9 +113,8 @@ mod tests {
     fn should_append_extra_args_after_all_flags() {
         let extra = vec!["--no-verify".to_string()];
         let args = build_commit_args(true, false, false, "feat: add thing", Some("body"), &extra);
-        assert_eq!(
-            args,
-            vec![
+        check!(
+            args == vec![
                 "commit",
                 "--all",
                 "-m",
