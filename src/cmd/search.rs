@@ -27,7 +27,7 @@ pub(super) fn filter(gitmojis: &[Gitmoji], text: &str) -> Vec<Gitmoji> {
         })
         .collect::<Vec<_>>();
 
-    filtered.sort_by(|a, b| b.1.cmp(&a.1));
+    filtered.sort_by_key(|&(_, score)| std::cmp::Reverse(score));
     filtered.truncate(MAX_LENGTH);
 
     filtered.into_iter().map(|(gitmoji, _)| gitmoji).collect()

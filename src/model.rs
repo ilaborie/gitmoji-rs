@@ -237,7 +237,7 @@ impl Display for Gitmoji {
 #[cfg(test)]
 #[allow(clippy::ignored_unit_patterns)]
 mod tests {
-    use assert2::*;
+    use assert2::{assert, check};
 
     use super::*;
 
@@ -252,11 +252,11 @@ mod tests {
 
         // Serialize
         let toml = toml_edit::ser::to_string(&gitmoji);
-        let_assert!(Ok(toml) = toml);
+        assert!(let Ok(toml) = toml);
 
         // Deserialize
         let result = toml_edit::de::from_str::<Gitmoji>(&toml);
-        let_assert!(Ok(result) = result);
+        assert!(let Ok(result) = result);
 
         check!(result == gitmoji);
     }
@@ -273,11 +273,11 @@ mod tests {
 
         // Serialize
         let toml = toml_edit::ser::to_string(&config);
-        let_assert!(Ok(toml) = toml);
+        assert!(let Ok(toml) = toml);
 
         // Deserialize
         let result = toml_edit::de::from_str::<GitmojiConfig>(&toml);
-        let_assert!(Ok(result) = result);
+        assert!(let Ok(result) = result);
 
         check!(result == config);
     }

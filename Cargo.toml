@@ -28,7 +28,12 @@ installers = ["shell", "homebrew"]
 # A GitHub repo to push Homebrew formulas to
 tap = "ilaborie/homebrew-ilaborie"
 # Target platforms to build apps for (Rust target-triple syntax)
-targets = ["aarch64-apple-darwin", "x86_64-apple-darwin", "x86_64-unknown-linux-gnu", "x86_64-pc-windows-msvc"]
+targets = [
+    "aarch64-apple-darwin",
+    "x86_64-apple-darwin",
+    "x86_64-unknown-linux-gnu",
+    "x86_64-pc-windows-msvc",
+]
 # Publish jobs to run in CI
 publish-jobs = ["homebrew"]
 # Which actions to run on pull requests
@@ -50,32 +55,32 @@ clap = { version = "4.5", features = ["derive"] }
 clap_complete = "4.5"
 console = "0.16"
 derive_more = { version = "2.1", default-features = false, features = [
-  "display",
-  "error",
-  "from",
+    "display",
+    "error",
+    "from",
 ] }
 dialoguer = { version = "0.12", features = ["fuzzy-select", "history"] }
 directories = "6.0"
 fuzzy-matcher = "0.3"
-reqwest = { version = "0.12", features = ["json", "rustls-tls-native-roots"] }
+reqwest = { version = "0.13.3", default-features = false, features = ["json", "rustls"] }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.48", features = [
-  "process",
-  "fs",
-  "macros",
-  "rt-multi-thread",
+    "process",
+    "fs",
+    "macros",
+    "rt-multi-thread",
 ] }
-toml_edit = { version = "0.23", features = ["serde"] }
+toml_edit = { version = "0.25.11", features = ["serde"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["fmt", "env-filter"] }
 url = { version = "2.5", features = ["serde"] }
 
 [dev-dependencies]
 anyhow = "1.0"
-assert2 = "0.3"
+assert2 = "0.4.0"
 assert_cmd = "2.1"
 assert_fs = "1.1"
-rexpect = "0.6"
+rexpect = "0.7.0"
 rstest = "0.26"
 serial_test = "3.2"
 test-log = { version = "0.2", features = ["trace"], default-features = false }
