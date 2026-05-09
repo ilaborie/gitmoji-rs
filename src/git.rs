@@ -22,14 +22,14 @@ fn map_git_error<'a>(args: &'a [&'a str]) -> impl FnOnce(std::io::Error) -> GitC
     }
 }
 
-pub(crate) async fn commit(
+fn build_commit_args<'a>(
     all: bool,
     amend: bool,
     signed: bool,
-    commit_title: &str,
-    description: Option<&str>,
-    extra_args: &[String],
-) -> Result<ExitStatus> {
+    commit_title: &'a str,
+    description: Option<&'a str>,
+    extra_args: &'a [String],
+) -> Vec<&'a str> {
     let mut args = vec!["commit"];
     if all {
         args.push("--all");
@@ -49,6 +49,18 @@ pub(crate) async fn commit(
     for arg in extra_args {
         args.push(arg);
     }
+    args
+}
+
+pub(crate) async fn commit(
+    all: bool,
+    amend: bool,
+    signed: bool,
+    commit_title: &str,
+    description: Option<&str>,
+    extra_args: &[String],
+) -> Result<ExitStatus> {
+    let args = build_commit_args(all, amend, signed, commit_title, description, extra_args);
     let status = Command::new("git")
         .args(&args)
         .status()
@@ -56,6 +68,66 @@ pub(crate) async fn commit(
         .map_err(map_git_error(&args))?;
 
     Ok(status)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn should_build_basic_args() {
+        let args = build_commit_args(false, false, false, "feat: add thing", None, &[]);
+        assert_eq!(args, vec!["commit", "-m", "feat: add thing"]);
+    }
+
+    #[test]
+    fn should_build_args_with_description() {
+        let args = build_commit_args(false, false, false, "feat: add thing", Some("body"), &[]);
+        assert_eq!(args, vec!["commit", "-m", "feat: add thing", "-m", "body"]);
+    }
+
+    #[test]
+    fn should_build_args_with_flags() {
+        let args = build_commit_args(true, true, true, "feat: add thing", None, &[]);
+        assert_eq!(
+            args,
+            vec!["commit", "--all", "--amend", "-S", "-m", "feat: add thing"]
+        );
+    }
+
+    #[test]
+    fn should_append_extra_args_at_tail() {
+        let extra = vec!["--no-verify".to_string(), "--signoff".to_string()];
+        let args = build_commit_args(false, false, false, "feat: add thing", None, &extra);
+        assert_eq!(
+            args,
+            vec![
+                "commit",
+                "-m",
+                "feat: add thing",
+                "--no-verify",
+                "--signoff"
+            ]
+        );
+    }
+
+    #[test]
+    fn should_append_extra_args_after_all_flags() {
+        let extra = vec!["--no-verify".to_string()];
+        let args = build_commit_args(true, false, false, "feat: add thing", Some("body"), &extra);
+        assert_eq!(
+            args,
+            vec![
+                "commit",
+                "--all",
+                "-m",
+                "feat: add thing",
+                "-m",
+                "body",
+                "--no-verify"
+            ]
+        );
+    }
 }
 
 pub(crate) async fn get_config_value(config_key: &str) -> Result<String> {

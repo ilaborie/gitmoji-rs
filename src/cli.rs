@@ -44,7 +44,7 @@ pub enum Command {
         amend: bool,
 
         #[clap(last = true)]
-        /// Extra arguments to pass to `git commit`
+        /// Extra arguments forwarded verbatim to `git commit` (separate with `--`, e.g. `gitmoji commit -- --no-verify`)
         extra_args: Vec<String>,
     },
 

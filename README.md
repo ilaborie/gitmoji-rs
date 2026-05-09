@@ -115,6 +115,13 @@ Interactively create a git commit
 
 Note that it's internally use the `git` command.
 
+You can forward extra flags to `git commit` by appending `--` followed by the flags:
+
+```shell
+❯ gitmoji commit -- --no-verify
+❯ gitmoji commit -- --no-verify --signoff
+```
+
 ### `gitmoji update`
 
 Update the gitmojis list based on the provided api url.
