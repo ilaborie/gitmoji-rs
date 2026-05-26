@@ -62,7 +62,7 @@ derive_more = { version = "2.1", default-features = false, features = [
 dialoguer = { version = "0.12", features = ["fuzzy-select", "history"] }
 directories = "6.0"
 fuzzy-matcher = "0.3"
-reqwest = { version = "0.13.3", default-features = false, features = ["json", "rustls"] }
+reqwest = { version = "0.13.4", default-features = false, features = ["json", "rustls"] }
 serde = { version = "1", features = ["derive"] }
 tokio = { version = "1.48", features = [
     "process",
