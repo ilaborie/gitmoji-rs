@@ -82,7 +82,7 @@ assert_cmd = "2.1"
 assert_fs = "1.1"
 rexpect = "0.7.0"
 rstest = "0.26"
-serial_test = "3.2"
+serial_test = "3.5"
 test-log = { version = "0.2", features = ["trace"], default-features = false }
 wiremock = "0.6"
 
