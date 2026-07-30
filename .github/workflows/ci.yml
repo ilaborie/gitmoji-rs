@@ -31,7 +31,7 @@ jobs:
           rustflags: ""
 
       - name: Install cargo-sort and cargo-nextest
-        uses: taiki-e/install-action@v2
+        uses: taiki-e/install-action@v2.85.2
         with:
           tool: cargo-sort,cargo-nextest
 
